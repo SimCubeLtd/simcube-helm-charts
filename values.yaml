@@ -8,7 +8,7 @@ hadr: 0
 # Override sapassword in templates/secret.yaml
 # sapassword: "MyStrongPassword1234"
 image:
-  repository: microsoft/mssql-server-linux
+  repository: mcr.microsoft.com/mssql/server
   tag: 2019-latest
   pullPolicy: IfNotPresent
   
