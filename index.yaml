@@ -1,0 +1,20 @@
+apiVersion: v1
+entries:
+  mssql-linux:
+  - apiVersion: v1
+    appVersion: 1.0.2
+    created: "2022-05-19T23:51:30.172984411Z"
+    description: SQL Server 2019 Linux Helm Chart
+    digest: d988873390986e8004ba13950bc7f5b1d11ef16dde0b2372fff10895f2d898bd
+    home: https://hub.docker.com/r/microsoft/mssql-server-linux/
+    icon: https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1I4Dx
+    maintainers:
+    - email: info@simcube.co.uk
+      name: simcube
+    name: mssql-linux
+    sources:
+    - https://hub.docker.com/r/microsoft/mssql-server-linux/
+    urls:
+    - https://github.com/SimCubeLtd/mssql-server-helm/releases/download/mssql-linux-1.0.2/mssql-linux-1.0.2.tgz
+    version: 1.0.2
+generated: "2022-05-19T23:51:30.172991912Z"
