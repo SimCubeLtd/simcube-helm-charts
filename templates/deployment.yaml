@@ -52,21 +52,21 @@ spec:
                  name: {{ template "mssql.fullname" . }}-secret
                  key: sapassword
             - name: MSSQL_DATA_DIR
-              value: /mssql-data/data
+              value: /var/opt/mssql/data
             - name: MSSQL_LOG_DIR
-              value: /mssql-translog/translog
+              value: /var/opt/mssql/log
             - name: MSSQL_TCP_PORT
               value: "{{ .Values.service.port }}"
             - name: MSSQL_BACKUP_DIR
-              value: "/mssql-backup/backup"
+              value: "/var/opt/mssql/backup"
             - name: MSSQL_COLLATION
               value: "{{ .Values.collation }}"
             - name: MSSQL_LCID
               value: "{{ .Values.lcid }}"
             - name: MSSQL_MASTER_DATA_FILE
-              value: /mssql-data/master/master.mdf
+              value: /var/opt/mssql/master/master.mdf
             - name: MSSQL_MASTER_LOG_FILE
-              value: /mssql-data/master/mastlog.ldf
+              value: /var/opt/mssql/master/mastlog.ldf
             - name: MSSQL_ENABLE_HADR
               value: "{{ .Values.hadr }}"
             {{ if .Values.resources.limits.memory }}
@@ -81,13 +81,13 @@ spec:
               containerPort: {{ .Values.service.port }}
           volumeMounts:
             - name: data
-              mountPath: /mssql-data/data
+              mountPath: /var/opt/mssql/data
             - name: transactionlog
-              mountPath: /mssql-translog/translog
+              mountPath: /var/opt/mssql/log
             - name: backup
-              mountPath: /mssql-backup/backup
+              mountPath: /var/opt/mssql/backup
             - name: master
-              mountPath: /mssql-data/master
+              mountPath: /var/opt/mssql/master
           livenessProbe:
              tcpSocket:
                port: mssql
