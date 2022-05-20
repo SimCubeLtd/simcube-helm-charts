@@ -33,8 +33,15 @@ spec:
 {{ toYaml .Values.pod.annotations | indent 8 }}
 {{- end }}
     spec:
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        fsGroup: 10001
       containers:
         - name: {{ .Chart.Name }}
+          securityContext:
+            runAsUser: 1001
+            runAsGroup: 1001
+            fsGroup: 1001
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           {{- if .Values.image.pullSecrets }}
           imagePullSecrets:
@@ -52,9 +59,7 @@ spec:
                  name: {{ template "mssql.fullname" . }}-secret
                  key: sapassword
             - name: MSSQL_DATA_DIR
-              value: /var/opt/mssql/data
-            - name: MSSQL_LOG_DIR
-              value: /var/opt/mssql/log
+              value: /var/opt/mssql
             - name: MSSQL_TCP_PORT
               value: "{{ .Values.service.port }}"
             - name: MSSQL_COLLATION
@@ -79,9 +84,7 @@ spec:
               containerPort: {{ .Values.service.port }}
           volumeMounts:
             - name: data
-              mountPath: /var/opt/mssql/data
-            - name: transactionlog
-              mountPath: /var/opt/mssql/log
+              mountPath: /var/opt/mssql
           livenessProbe:
              tcpSocket:
                port: mssql
@@ -107,17 +110,6 @@ spec:
           {{- else }}
           claimName: {{ template "mssql.fullname" . }}-data
           {{- end -}}
-      {{- else }}
-        emptyDir: {}
-      {{- end }}
-      - name: transactionlog
-      {{- if .Values.persistence.enabled }}
-        persistentVolumeClaim:
-          {{- if .Values.persistence.existingTransactionLogClaim }}
-          claimName: {{ .Values.persistence.existingTransactionLogClaim }}
-          {{- else }}
-          claimName: {{ template "mssql.fullname" . }}-translog
-          {{- end }}
       {{- else }}
         emptyDir: {}
       {{- end }}

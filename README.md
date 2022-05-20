@@ -90,7 +90,7 @@ The configuration parameters in this section control the resources requested and
 | Parameter        | Description                                                                                    | Default                          |
 | ---------------- | ---------------------------------------------------------------------------------------------- | -------------------------------- |
 | acceptEula.value | EULA that needs to be accepted.  It will need to be changed via commandline or values.yaml.    | `n`                              |
-| edition.value    | The edition of SQL Server to install.  See section [Editions](#sql-server-for-linux-editions). | `Express`                        |
+| edition.value    | The edition of SQL Server to install.  See section [Editions](#sql-server-for-linux-editions). | `Developer`                        |
 | sapassword       | Password for sa login                                                                          | `Random (20-AlphNum)`<sup>1<sup> |
 | image.repository | The docker hub repo for SQL Server                                                             | `microsoft/mssql-server-linux`   |
 | image.tag        | The tag for the image                                                                          | `2017-CU5`                       |
@@ -111,12 +111,9 @@ The configuration parameters in this section control the resources requested and
 | hadr             | Enable Availability Group                                                                      | `0`                              |
 | persistence.enabled | Persist the Data and Log files for SQL Server                                               | `false`                          |
 | persistence.existingDataClaim | Identify an existing Claim to be used for the Data Directory                      | `Commented Out`                  |
-| persistence.existingTransactionLogClaim  | Identify an existing Claim to be used for the Log Directory            | `Commented Out`                  |
 | persistence.storageClass      | Storage Class to be used                                                          | `Commented Out`                  |
 | persistence.dataAccessMode    | Data Access Mode to be used for the Data Directory                                | `ReadWriteOnce`                  |
 | persistence.dataSize          | PVC Size for Data Directory                                                       | `1Gi`                            |
-| persistence.logAccessMode     | Data Access Mode to be used for the Log Directory                                 | `ReadWriteOnce`                  |
-| persistence.logSize           | PVC Size for Log Directory                                                        | `1Gi`                            |
 
 > 1 - [Please read password requirements](https://docs.microsoft.com/en-us/sql/relational-databases/security/password-policy)
 

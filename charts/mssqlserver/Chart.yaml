@@ -1,5 +1,5 @@
 apiVersion: v1
-appVersion: 1.0.3
+appVersion: 1.0.5
 description: SQL Server 2019 Linux Helm Chart
 home: https://hub.docker.com/r/microsoft/mssql-server-linux/
 icon: https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1I4Dx
@@ -9,4 +9,4 @@ maintainers:
 name: mssql-linux
 sources:
 - https://hub.docker.com/r/microsoft/mssql-server-linux/
-version: 1.0.3
+version: 1.0.5
