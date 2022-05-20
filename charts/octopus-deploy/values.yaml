@@ -43,21 +43,8 @@ octopus:
   # Azure AKS uses azurefile for this ReadWriteMany volumes.
   # Google uses Filestore for ReadWriteMany volumes: https://cloud.google.com/filestore/docs/accessing-fileshares
   # Amazon uses EFS for ReadWriteMany volumes: https://docs.aws.amazon.com/eks/latest/userguide/efs-csi.html
-  storageClassName: ""
-  # When replica count is 1, this value defines the storage access type. When replica count is greater than 1, the
-  # storage more is always ReadWriteMany.
-  storageAccessMode: ReadWriteOnce
-  # The size of the repository volume
-  repositoryVolumeSize: 1Gi
-  # The size of the artifact volume
-  artifactVolumeSize: 1Gi
-  # The size of the task log volume
-  taskVolumeSize: 1Gi
-  # The size of the server log volume. Each Octopus node mounts its own server log volume to ensure server logs
-  # persist across restarts.
-  logVolumeSize: 200Mi
   # The port to access the web interface
-  webPort: 80
+  webPort: 8080
   # The port to access the polling tentacles on
   tentaclePort: 10943
   # The type of service created to expose the Octopus nodes. Options are ClusterIP and NodePort.
@@ -71,6 +58,35 @@ octopus:
     # Note that if replicaCount is 1, the load balancer exposing the web interface also exposes port 10943
     # to allow tentacles to connect to the single instance, and this setting will likely be set to false.
     exposeServices: false
+
+persistence:
+  storageClassName: ""
+  # When replica count is 1, this value defines the storage access type. When replica count is greater than 1, the
+  # storage more is always ReadWriteMany.
+  storageAccessMode: ReadWriteOnce
+  # The size of the repository volume
+  repositoryVolumeSize: 1Gi
+  # The size of the artifact volume
+  artifactVolumeSize: 1Gi
+  # The size of the task log volume
+  taskVolumeSize: 1Gi
+  # The size of the server log volume. Each Octopus node mounts its own server log volume to ensure server logs
+  # persist across restarts.
+  logVolumeSize: 200Mi
+  
+ingress:
+  enabled: false
+  annotations: {}
+  labels: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host:
+      paths: []
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
 
 dockerHub:
   # Set to true to create a secret containing the docker registry password

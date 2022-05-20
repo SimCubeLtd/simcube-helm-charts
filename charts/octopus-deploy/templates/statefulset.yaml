@@ -187,11 +187,11 @@ spec:
         name: server-logs-vol
       spec:
         accessModes: [ "ReadWriteOnce" ]
-        {{- if (eq "-" (.Values.octopus.storageClassName | toString)) }}
+        {{- if (eq "-" (.Values.persistence.storageClassName | toString)) }}
         storageClassName: ""
-        {{- else if .Values.octopus.storageClassName }}
-        storageClassName: "{{ .Values.octopus.storageClassName }}"
+        {{- else if .Values.persistence.storageClassName }}
+        storageClassName: "{{ .Values.persistence.storageClassName }}"
         {{- end }}
         resources:
           requests:
-            storage: {{.Values.octopus.logVolumeSize}}
+            storage: {{.Values.persistence.logVolumeSize}}

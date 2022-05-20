@@ -4,6 +4,8 @@ This Helm chart deploys a HA Octopus cluster (or a standalone Octopus instance w
 
 Kuberenetes v1.16 is required to deploy this chart.
 
+SQL Server is not bundled, as I prefer an external deployment for that which supports HA - see our chart here: https://artifacthub.io/packages/helm/mssql-server-2019/mssql-linux
+
 Generate a new master key with this command:
 
 ```

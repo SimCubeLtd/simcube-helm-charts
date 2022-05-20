@@ -7,16 +7,16 @@ spec:
     {{- if (gt (.Values.octopus.replicaCount | int) 1)}}
     - ReadWriteMany
     {{- else }}
-    - {{.Values.octopus.storageAccessMode}}
+    - {{.Values.persistence.storageAccessMode}}
     {{- end }}
-  {{- if (eq "-" (.Values.octopus.storageClassName | toString)) }}
+  {{- if (eq "-" (.Values.persistence.storageClassName | toString)) }}
   storageClassName: ""
-  {{- else if .Values.octopus.storageClassName }}
-  storageClassName: "{{ .Values.octopus.storageClassName }}"
+  {{- else if .Values.persistence.storageClassName }}
+  storageClassName: "{{ .Values.persistence.storageClassName }}"
   {{- end }}
   resources:
     requests:
-      storage: {{.Values.octopus.repositoryVolumeSize}}
+      storage: {{.Values.persistence.repositoryVolumeSize}}
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -27,16 +27,16 @@ spec:
     {{- if (gt (.Values.octopus.replicaCount | int) 1)}}
     - ReadWriteMany
     {{- else }}
-    - {{.Values.octopus.storageAccessMode}}
+    - {{.Values.persistence.storageAccessMode}}
     {{- end }}
-  {{- if (eq "-" (.Values.octopus.storageClassName | toString)) }}
+  {{- if (eq "-" (.Values.persistence.storageClassName | toString)) }}
   storageClassName: ""
-  {{- else if .Values.octopus.storageClassName }}
-  storageClassName: "{{ .Values.octopus.storageClassName }}"
+  {{- else if .Values.persistence.storageClassName }}
+  storageClassName: "{{ .Values.persistence.storageClassName }}"
   {{- end }}
   resources:
     requests:
-      storage: {{.Values.octopus.artifactVolumeSize}}
+      storage: {{.Values.persistence.artifactVolumeSize}}
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -47,13 +47,13 @@ spec:
     {{- if (gt (.Values.octopus.replicaCount | int) 1)}}
     - ReadWriteMany
     {{- else }}
-    - {{.Values.octopus.storageAccessMode}}
+    - {{.Values.persistence.storageAccessMode}}
       {{- end }}
-  {{- if (eq "-" (.Values.octopus.storageClassName | toString)) }}
+  {{- if (eq "-" (.Values.persistence.storageClassName | toString)) }}
   storageClassName: ""
-  {{- else if .Values.octopus.storageClassName }}
-  storageClassName: "{{ .Values.octopus.storageClassName }}"
+  {{- else if .Values.persistence.storageClassName }}
+  storageClassName: "{{ .Values.persistence.storageClassName }}"
   {{- end }}
   resources:
     requests:
-      storage: {{.Values.octopus.taskVolumeSize}}
+      storage: {{.Values.persistence.taskVolumeSize}}
