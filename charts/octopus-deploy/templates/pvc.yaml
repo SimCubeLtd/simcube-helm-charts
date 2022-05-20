@@ -1,0 +1,59 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: repository-claim
+spec:
+  accessModes:
+    {{- if (gt (.Values.octopus.replicaCount | int) 1)}}
+    - ReadWriteMany
+    {{- else }}
+    - {{.Values.octopus.storageAccessMode}}
+    {{- end }}
+  {{- if (eq "-" (.Values.octopus.storageClassName | toString)) }}
+  storageClassName: ""
+  {{- else if .Values.octopus.storageClassName }}
+  storageClassName: "{{ .Values.octopus.storageClassName }}"
+  {{- end }}
+  resources:
+    requests:
+      storage: {{.Values.octopus.repositoryVolumeSize}}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: artifacts-claim
+spec:
+  accessModes:
+    {{- if (gt (.Values.octopus.replicaCount | int) 1)}}
+    - ReadWriteMany
+    {{- else }}
+    - {{.Values.octopus.storageAccessMode}}
+    {{- end }}
+  {{- if (eq "-" (.Values.octopus.storageClassName | toString)) }}
+  storageClassName: ""
+  {{- else if .Values.octopus.storageClassName }}
+  storageClassName: "{{ .Values.octopus.storageClassName }}"
+  {{- end }}
+  resources:
+    requests:
+      storage: {{.Values.octopus.artifactVolumeSize}}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: task-logs-claim
+spec:
+  accessModes:
+    {{- if (gt (.Values.octopus.replicaCount | int) 1)}}
+    - ReadWriteMany
+    {{- else }}
+    - {{.Values.octopus.storageAccessMode}}
+      {{- end }}
+  {{- if (eq "-" (.Values.octopus.storageClassName | toString)) }}
+  storageClassName: ""
+  {{- else if .Values.octopus.storageClassName }}
+  storageClassName: "{{ .Values.octopus.storageClassName }}"
+  {{- end }}
+  resources:
+    requests:
+      storage: {{.Values.octopus.taskVolumeSize}}

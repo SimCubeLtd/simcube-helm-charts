@@ -1,0 +1,20 @@
+# Before an upgrade or rollback, all nodes must be shutdown, which we do by setting the replica count to 0.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: stop-all-nodes
+  annotations:
+    "helm.sh/hook": pre-upgrade,pre-rollback
+    "helm.sh/hook-delete-policy": hook-succeeded
+    "helm.sh/hook-weight": "0"
+spec:
+  ttlSecondsAfterFinished: 10
+  template:
+    spec:
+      serviceAccountName: octopus-drain
+      restartPolicy: Never
+      containers:
+      - name: k8s
+        image: bitnami/kubectl
+        imagePullPolicy: IfNotPresent
+        command: ["/bin/sh","-c", "kubectl patch statefulset octopus -p '{\"spec\": {\"replicas\": 0}}'; while kubectl get pod octopus-0 2>&1 >/dev/null; do echo \"sleeping...\"; sleep 10; done"]
