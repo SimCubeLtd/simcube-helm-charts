@@ -1,5 +1,4 @@
 {{- if .Values.ingress.enabled -}}
-{{- $svcPort := .Values.octopus.webPort -}}
 apiVersion: networking.k8s.io/v1
 {{- end }}
 kind: Ingress
@@ -34,7 +33,7 @@ spec:
           - path: {{ . }}
             backend:
               serviceName: octopus-web
-              servicePort: {{ $svcPort }}
+              servicePort: {{.Values.octopus.webPort}}
         {{- end }}
   {{- end }}
 {{- end }}
