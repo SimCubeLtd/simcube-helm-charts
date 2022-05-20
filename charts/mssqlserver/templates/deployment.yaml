@@ -57,16 +57,14 @@ spec:
               value: /var/opt/mssql/log
             - name: MSSQL_TCP_PORT
               value: "{{ .Values.service.port }}"
-            - name: MSSQL_BACKUP_DIR
-              value: "/var/opt/mssql/backup"
             - name: MSSQL_COLLATION
               value: "{{ .Values.collation }}"
             - name: MSSQL_LCID
               value: "{{ .Values.lcid }}"
             - name: MSSQL_MASTER_DATA_FILE
-              value: /var/opt/mssql/master/master.mdf
+              value: /var/opt/mssql/data/master.mdf
             - name: MSSQL_MASTER_LOG_FILE
-              value: /var/opt/mssql/master/mastlog.ldf
+              value: /var/opt/mssql/data/mastlog.ldf
             - name: MSSQL_ENABLE_HADR
               value: "{{ .Values.hadr }}"
             {{ if .Values.resources.limits.memory }}
@@ -84,10 +82,6 @@ spec:
               mountPath: /var/opt/mssql/data
             - name: transactionlog
               mountPath: /var/opt/mssql/log
-            - name: backup
-              mountPath: /var/opt/mssql/backup
-            - name: master
-              mountPath: /var/opt/mssql/master
           livenessProbe:
              tcpSocket:
                port: mssql
@@ -123,28 +117,6 @@ spec:
           claimName: {{ .Values.persistence.existingTransactionLogClaim }}
           {{- else }}
           claimName: {{ template "mssql.fullname" . }}-translog
-          {{- end }}
-      {{- else }}
-        emptyDir: {}
-      {{- end }}
-      - name: backup
-      {{- if .Values.persistence.enabled }}
-        persistentVolumeClaim:
-          {{- if .Values.persistence.existingBackupClaim }}
-          claimName: {{ .Values.persistence.existingBackupClaim }}
-          {{- else }}
-          claimName: {{ template "mssql.fullname" . }}-backup
-          {{- end }}
-      {{- else }}
-        emptyDir: {}
-      {{- end }}
-      - name: master
-      {{- if .Values.persistence.enabled }}
-        persistentVolumeClaim:
-          {{- if .Values.persistence.existingMasterClaim }}
-          claimName: {{ .Values.persistence.existingMasterClaim }}
-          {{- else }}
-          claimName: {{ template "mssql.fullname" . }}-master
           {{- end }}
       {{- else }}
         emptyDir: {}
