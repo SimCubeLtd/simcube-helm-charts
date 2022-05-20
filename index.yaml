@@ -97,4 +97,15 @@ entries:
     urls:
     - https://github.com/SimCubeLtd/mssql-server-helm/releases/download/mssql-linux-1.0.2/mssql-linux-1.0.2.tgz
     version: 1.0.2
-generated: "2022-05-20T01:01:50.553924864Z"
+  octopusdeploy:
+  - apiVersion: v2
+    appVersion: "2022.1"
+    created: "2022-05-20T12:14:42.235414506Z"
+    description: Octopus Deploy server as a HA Kubernetes deployment
+    digest: b18e30ae63f31dd92cf8759e5a3548be58f195aefe69ae8404ec119c318b7d72
+    name: octopusdeploy
+    type: application
+    urls:
+    - https://github.com/SimCubeLtd/simcube-helm-charts/releases/download/octopusdeploy-1.0.0/octopusdeploy-1.0.0.tgz
+    version: 1.0.0
+generated: "2022-05-20T12:14:42.235439407Z"
