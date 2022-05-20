@@ -38,10 +38,6 @@ spec:
         fsGroup: 10001
       containers:
         - name: {{ .Chart.Name }}
-          securityContext:
-            runAsUser: 1001
-            runAsGroup: 1001
-            fsGroup: 1001
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           {{- if .Values.image.pullSecrets }}
           imagePullSecrets:
@@ -66,10 +62,6 @@ spec:
               value: "{{ .Values.collation }}"
             - name: MSSQL_LCID
               value: "{{ .Values.lcid }}"
-            - name: MSSQL_MASTER_DATA_FILE
-              value: /var/opt/mssql/data/master.mdf
-            - name: MSSQL_MASTER_LOG_FILE
-              value: /var/opt/mssql/data/mastlog.ldf
             - name: MSSQL_ENABLE_HADR
               value: "{{ .Values.hadr }}"
             {{ if .Values.resources.limits.memory }}
