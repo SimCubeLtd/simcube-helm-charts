@@ -1,0 +1,14 @@
+Thank you for installing Octopus Deploy.
+
+Your release is named {{ .Release.Name }}.
+
+To get the address of the web interface load balancer, run:
+$ kubectl get service octopus-web
+
+To get the address of the polling tentacle load balancers, run:
+{{- range untilStep 0 (.Values.octopus.replicaCount | int) 1 }}
+$ kubectl get service octopus-{{ . }}
+{{- end }}
+
+To configure polling tentacles for HA nodes, follow the instructions at
+https://octopus.com/docs/administration/high-availability/configuring-octopus-for-high-availability.

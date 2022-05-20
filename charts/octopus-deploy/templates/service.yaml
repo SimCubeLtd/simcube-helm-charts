@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: octopus-web
+spec:
+  type: {{.Values.octopus.serviceType}}
+  ports:
+    - name: web
+      port: {{.Values.octopus.webPort}}
+      targetPort: 8080
+      protocol: TCP
+  {{- if (eq (.Values.octopus.replicaCount | int) 1)}}
+    # If there is only one node, expose the tentacle along with the web port
+    - name: tentacle
+      port: {{.Values.octopus.tentaclePort}}
+      targetPort: 10943
+      protocol: TCP
+  {{- end }}
+  selector:
+    app: octopus
+{{- if .Values.octopus.pollingTentacles.exposeServices }}
+{{- $root := . -}}
+{{- range untilStep 0 (.Values.octopus.replicaCount | int) 1 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: octopus-{{ . }}
+spec:
+  type: {{$root.Values.octopus.serviceType}}
+  ports:
+    - name: web
+      port: {{$root.Values.octopus.webPort}}
+      targetPort: 8080
+      protocol: TCP
+    - name: tentacle
+      port: {{$root.Values.octopus.tentaclePort}}
+      targetPort: 10943
+      protocol: TCP
+  selector:
+    statefulset.kubernetes.io/pod-name: octopus-{{ . }}
+{{- end }}
+{{- end }}

@@ -1,0 +1,80 @@
+octopus:
+  statefulSet:
+    annotations: {}
+    labels: {}
+  pods:
+    annotations: {}
+    labels: {}
+  # The Octopus server image. Visit https://hub.docker.com/r/octopusdeploy/octopusdeploy for the available versions.
+  image: octopusdeploy/octopusdeploy:2022.1
+  # Set this to 1 if you do not have a HA license.
+  replicaCount: 1
+  # The Octopus admin username
+  username:
+  # The Octopus admin password
+  password:
+  # The Octopus admin email
+  email:
+  # The built in worker can use execution containers to run steps inside special Docker images.
+  # https://octopus.com/docs/deployment-process/execution-containers-for-workers.
+  # This requires supporting Docker in Docker, which in turn means the Octopus image must be run with
+  # all privileges. Disabling this setting disabled DOcker-In-Docker and does not set the privileged mode.
+  enableDockerInDocker: true
+  # Change this, as it is used to encrypt secrets. Generate a key with: openssl rand 16 | base64
+  masterKey: GENERATE_ME
+  # Must be set to "Y" (including the quotes) to accept the EULA at https://octopus.com/legal/customer-agreement
+  acceptEula: "N"
+  # Use the MS SQL server defined below.
+  connectionString: Server={{ .Release.Name }}-mssql-linux,1433;Database=Octopus;User Id=SA;Password=Password01!
+  # The base 64 encoded copy of the Octopus license. This needs to be a HA license if replicaCount is greater than 1.
+  licenseKeyBase64:
+  # An optional persistent volume claim class name for the Octopus server volumes. This storage class must support
+  # ReadWriteMany access modes for HA clusters.
+  # ReadWriteOnce or ReadWriteMany can be used for single node clusters.
+  # A dash (i.e. "-") means use an empty string as the storageClass attribute. This effectively means there
+  # is no automatic provisioning of persistent volumes, and the PV's need to be created externally outside of this chart.
+  # An falsy value (https://helm.sh/docs/chart_template_guide/control_structures/#ifelse defines falsy) means the
+  # storageClass attribute is not defined, and the default value may be used. Most cloud providers support automatic
+  # provisioning of ReadWriteOnce volumes.
+  # Just be aware that ReadWriteOnce volumes can only be used with a replicaCount of 1, as higher replica counts means
+  # multiple Octopus nodes writing to the same volume at the same time,
+  # requiring ReadWriteMany volumes. Also note that the storageAccessMode value is automatically set to ReadWriteMany
+  # when replicaCount is greater than 1.
+  # Azure AKS uses azurefile for this ReadWriteMany volumes.
+  # Google uses Filestore for ReadWriteMany volumes: https://cloud.google.com/filestore/docs/accessing-fileshares
+  # Amazon uses EFS for ReadWriteMany volumes: https://docs.aws.amazon.com/eks/latest/userguide/efs-csi.html
+  storageClassName: ""
+  # When replica count is 1, this value defines the storage access type. When replica count is greater than 1, the
+  # storage more is always ReadWriteMany.
+  storageAccessMode: ReadWriteOnce
+  # The size of the repository volume
+  repositoryVolumeSize: 1Gi
+  # The size of the artifact volume
+  artifactVolumeSize: 1Gi
+  # The size of the task log volume
+  taskVolumeSize: 1Gi
+  # The size of the server log volume. Each Octopus node mounts its own server log volume to ensure server logs
+  # persist across restarts.
+  logVolumeSize: 200Mi
+  # The port to access the web interface
+  webPort: 80
+  # The port to access the polling tentacles on
+  tentaclePort: 10943
+  # The type of service created to expose the Octopus nodes. Options are ClusterIP and NodePort.
+  serviceType: LoadBalancer
+  # Settings concerning polling tentacles across the HA nodes
+  pollingTentacles:
+    # If true, a load balancer is created for each Octopus instance for polling tentacles to point to.
+    # This is because polling tentacles need to query each Octopus node to get new tasks.
+    # The docs at https://octopus.com/docs/administration/high-availability/configuring-octopus-for-high-availability
+    # have instructions on how to configure polling tentacles to connect to multiple nodes.
+    # Note that if replicaCount is 1, the load balancer exposing the web interface also exposes port 10943
+    # to allow tentacles to connect to the single instance, and this setting will likely be set to false.
+    exposeServices: false
+
+dockerHub:
+  # Set to true to create a secret containing the docker registry password
+  login: false
+  # The base 64 encoded Docker config.json file. This value can be created with the command:
+  # kubectl create secret docker-registry regcred --docker-username=myusername --docker-password=mypassword --dry-run=client -o yaml
+  creds:
