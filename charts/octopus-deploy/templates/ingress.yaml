@@ -32,7 +32,7 @@ spec:
           - path: {{ . }}
             backend:
               serviceName: octopus-web
-              servicePort: {{.Values.octopus.webPort}}
+              servicePort: 8080
         {{- end }}
   {{- end }}
 {{- end }}
