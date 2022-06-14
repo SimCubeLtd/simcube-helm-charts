@@ -1,0 +1,15 @@
+apiVersion: v2
+name: geoserver
+version: "1.0.0"
+appVersion: "2.20.4"
+description: Chart for GeoServer
+keywords:
+  - GeoServer
+  - GIS
+home: http://geoserver.org
+sources:
+  - https://github.com/geoserver/geoserver
+maintainers:
+- email: info@simcube.co.uk
+  name: simcube
+icon: https://avatars.githubusercontent.com/u/186522?s=280&v=4
