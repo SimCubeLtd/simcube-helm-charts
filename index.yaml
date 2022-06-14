@@ -149,6 +149,40 @@ entries:
     urls:
     - https://github.com/SimCubeLtd/simcube-helm-charts/releases/download/mssql-linux-1.0.0/mssql-linux-1.0.0.tgz
     version: 1.0.0
+  mssqlserver-2019:
+  - apiVersion: v1
+    appVersion: 2019-CU16-ubuntu-20.04
+    created: "2022-06-14T22:02:28.037914026Z"
+    description: SQL Server 2019 Linux Helm Chart
+    digest: 0519e350f63134255f6081a7896fbd6e4d98dd49f509d189a41dd1d80e78ddd8
+    home: https://hub.docker.com/r/microsoft/mssql-server-linux/
+    icon: https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1I4Dx
+    maintainers:
+    - email: info@simcube.co.uk
+      name: simcube
+    name: mssqlserver-2019
+    sources:
+    - https://hub.docker.com/r/microsoft/mssql-server-linux/
+    urls:
+    - https://github.com/SimCubeLtd/simcube-helm-charts/releases/download/mssqlserver-2019-1.0.10/mssqlserver-2019-1.0.10.tgz
+    version: 1.0.10
+  mssqlserver-2022:
+  - apiVersion: v1
+    appVersion: "2022"
+    created: "2022-06-14T22:02:28.165895241Z"
+    description: SQL Server 2022 Linux Helm Chart
+    digest: 0c4072fc31779f5cbc4fe49ae03e4db78f697d79b8a7ea7ac4535130b16794f2
+    home: https://hub.docker.com/r/microsoft/mssql-server-linux/
+    icon: https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1I4Dx
+    maintainers:
+    - email: info@simcube.co.uk
+      name: simcube
+    name: mssqlserver-2022
+    sources:
+    - https://hub.docker.com/r/microsoft/mssql-server-linux/
+    urls:
+    - https://github.com/SimCubeLtd/simcube-helm-charts/releases/download/mssqlserver-2022-1.0.1/mssqlserver-2022-1.0.1.tgz
+    version: 1.0.1
   octopusdeploy:
   - apiVersion: v2
     appVersion: 2022.1.2661
@@ -230,4 +264,4 @@ entries:
     urls:
     - https://github.com/SimCubeLtd/simcube-helm-charts/releases/download/octopusdeploy-1.0.0/octopusdeploy-1.0.0.tgz
     version: 1.0.0
-generated: "2022-06-14T21:59:12.78724283Z"
+generated: "2022-06-14T22:02:28.165929141Z"
