@@ -1,0 +1,12 @@
+apiVersion: v1
+appVersion: "2022"
+description: SQL Server 2022 Linux Helm Chart
+home: https://hub.docker.com/r/microsoft/mssql-server-linux/
+icon: https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1I4Dx
+maintainers:
+- email: info@simcube.co.uk
+  name: simcube
+name: mssql-linux
+sources:
+- https://hub.docker.com/r/microsoft/mssql-server-linux/
+version: 1.0.0
