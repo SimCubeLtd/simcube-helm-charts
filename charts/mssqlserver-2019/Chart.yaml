@@ -6,7 +6,7 @@ icon: https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileDa
 maintainers:
 - email: info@simcube.co.uk
   name: simcube
-name: mssql-linux
+name: mssqlserver-2019
 sources:
 - https://hub.docker.com/r/microsoft/mssql-server-linux/
-version: "1.0.9"
+version: "1.0.10"
