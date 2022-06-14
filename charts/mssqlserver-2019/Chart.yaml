@@ -9,4 +9,4 @@ maintainers:
 name: mssql-linux
 sources:
 - https://hub.docker.com/r/microsoft/mssql-server-linux/
-version: "1.0.8"
+version: "1.0.9"
