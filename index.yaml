@@ -117,6 +117,22 @@ entries:
     urls:
     - https://github.com/SimCubeLtd/mssql-server-helm/releases/download/mssql-linux-1.0.2/mssql-linux-1.0.2.tgz
     version: 1.0.2
+  - apiVersion: v1
+    appVersion: "2022"
+    created: "2022-06-14T21:55:22.532631753Z"
+    description: SQL Server 2022 Linux Helm Chart
+    digest: f457f4d53b61440202ebf44fa9f7094a8c7c3274005e676538d117d85f263700
+    home: https://hub.docker.com/r/microsoft/mssql-server-linux/
+    icon: https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1I4Dx
+    maintainers:
+    - email: info@simcube.co.uk
+      name: simcube
+    name: mssql-linux
+    sources:
+    - https://hub.docker.com/r/microsoft/mssql-server-linux/
+    urls:
+    - https://github.com/SimCubeLtd/simcube-helm-charts/releases/download/mssql-linux-1.0.0/mssql-linux-1.0.0.tgz
+    version: 1.0.0
   octopusdeploy:
   - apiVersion: v2
     appVersion: 2022.1.2661
@@ -198,4 +214,4 @@ entries:
     urls:
     - https://github.com/SimCubeLtd/simcube-helm-charts/releases/download/octopusdeploy-1.0.0/octopusdeploy-1.0.0.tgz
     version: 1.0.0
-generated: "2022-06-14T21:46:33.839588918Z"
+generated: "2022-06-14T21:55:22.532672754Z"
