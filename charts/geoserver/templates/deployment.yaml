@@ -4,8 +4,8 @@ metadata:
   name: {{ template "geoserver.fullname" . }}
   labels:
     app: {{ template "geoserver.fullname" . }}
-    chart: {{ template "geoserver.chart" . }}
-    release: {{ .Release.Name | quote }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
     heritage: {{ .Release.Service | quote }}
   {{- with .Values.labels }}
   {{- toYaml . | nindent 4 }}
@@ -39,7 +39,7 @@ spec:
     spec:
       containers:
         - name: {{ .Values.nameOverride }}
-          image: {{ template "geoserver.image" . }}
+          image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- if .Values.resources }}
           resources: {{- toYaml .Values.resources | nindent 12 }}
