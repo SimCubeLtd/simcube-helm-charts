@@ -31,7 +31,10 @@ Get the password secret.
 Get the Image.
 */}}
 {{- define "geoserver.image" -}}
-{{- printf "%s/%s:%s" or .Values.container.image.registry "docker.io" or .Values.container.image.repository "kartoza/geoserver" or .Values.container.image.tag .Values.appTag -}}
+{{- $registry := default "docker.io" .Values.container.image.registry -}}
+{{- $repository := default "kartoza/geoserver" .Values.container.image.repository -}}
+{{- $tag := default .Values.appTag .Values.container.image.tag -}}
+{{- printf "%s/%s:%s" $registry $repository $tag -}}
 {{- end -}}
 
 
