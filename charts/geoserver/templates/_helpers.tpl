@@ -26,11 +26,12 @@ Get the password secret.
 {{- end -}}
 {{- end -}}
 
+
 {{/*
 Get the Image.
 */}}
 {{- define "geoserver.image" -}}
-{{- printf "%s/%s:%s" .Values.container.image.registry .Values.container.image.repository .Values.container.image.tag -}}
+{{- printf "%s/%s:%s" or .Values.container.image.registry "docker.io" or .Values.container.image.repository "kartoza/geoserver" or .Values.container.image.tag .Values.appTag -}}
 {{- end -}}
 
 

@@ -1,9 +1,8 @@
 container:
   image:
-    registry: "docker.io"
-    repository: "kartoza/geoserver"
-    tag: "2.20.4"
     pullPolicy: Always
+
+appTag: "2.20.4"
 
 geoserverDataDir: /opt/geoserver/data_dir
 geowebcacheCacheDir: /opt/geoserver/data_dir/gwc
