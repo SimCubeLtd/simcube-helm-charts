@@ -1,6 +1,6 @@
 image:
-  registry: docker.io
-  repository: kartoza/geoserver
+  registry: "docker.io"
+  repository: "kartoza/geoserver"
   tag: "2.20.4"
   pullPolicy: IfNotPresent
 
