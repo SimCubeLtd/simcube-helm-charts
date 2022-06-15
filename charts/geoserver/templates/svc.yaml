@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "geoserver.fullname" . }}
+  name: {{ .Values.nameOverride }}
   labels:
     app: {{ template "geoserver.fullname" . }}
     chart: {{ template "geoserver.chart" . }}

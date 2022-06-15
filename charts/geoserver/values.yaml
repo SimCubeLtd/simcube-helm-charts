@@ -7,6 +7,10 @@ image:
 geoserverDataDir: /opt/geoserver/data_dir
 geowebcacheCacheDir: /opt/geoserver/data_dir/gwc
 
+## nameOverride String to override geoserver.fullname template
+##
+nameOverride: ""
+
 geoserverUser: admin
 
 # For prefilled password

@@ -21,7 +21,7 @@ spec:
       release: {{ .Release.Name | quote }}
   template:
     metadata:
-      name: {{ template "geoserver.fullname" . }}
+      name: {{ .Values.nameOverride }}
       labels:
         app: {{ template "geoserver.fullname" . }}
         chart: {{ template "geoserver.chart" . }}
@@ -38,7 +38,7 @@ spec:
         {{- end }}
     spec:
       containers:
-        - name: {{ template "geoserver.fullname" . }}
+        - name: {{ .Values.nameOverride }}
           image: {{ template "geoserver.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- if .Values.resources }}
