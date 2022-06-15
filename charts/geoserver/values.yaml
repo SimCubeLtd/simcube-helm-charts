@@ -9,7 +9,7 @@ geowebcacheCacheDir: /opt/geoserver/data_dir/gwc
 
 ## nameOverride String to override geoserver.fullname template
 ##
-nameOverride: ""
+nameOverride: "geoserver"
 
 geoserverUser: admin
 

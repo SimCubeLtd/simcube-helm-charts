@@ -18,6 +18,7 @@ Full list of options can be seen in: https://github.com/kartoza/docker-geoserver
 | image.repository | Docker image repository |
 | image.tag | Docker image tag |
 | image.pullPolicy | Docker image pull policy |
+| nameOverride | Allow name override of service and contaioner (defaults to geoserver) |
 | geoserverDataDir | The directory of GeoServer Data Dir inside the pod |
 | geowebcacheCacheDir | GeoServer have GeoWebCache support built in. This will be the location of the cache dir |
 | geoserverUser | GeoServer super user name |
