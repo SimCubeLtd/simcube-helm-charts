@@ -3,6 +3,25 @@ entries:
   geoserver:
   - apiVersion: v2
     appVersion: 2.20.4
+    created: "2022-06-15T20:34:27.588386672Z"
+    description: Chart for GeoServer
+    digest: 476e97f58ccd56a8685e3dba419e6ed7d831dde3238852750b57144ac55ed2ea
+    home: http://geoserver.org
+    icon: https://avatars.githubusercontent.com/u/186522?s=280&v=4
+    keywords:
+    - GeoServer
+    - GIS
+    maintainers:
+    - email: info@simcube.co.uk
+      name: simcube
+    name: geoserver
+    sources:
+    - https://github.com/geoserver/geoserver
+    urls:
+    - https://github.com/SimCubeLtd/simcube-helm-charts/releases/download/geoserver-1.0.10/geoserver-1.0.10.tgz
+    version: 1.0.10
+  - apiVersion: v2
+    appVersion: 2.20.4
     created: "2022-06-15T14:16:25.854478412Z"
     description: Chart for GeoServer
     digest: 3d37a71f9435f3c8552789cc68deebb3711e5fa2f976e12845b270699c535089
@@ -477,4 +496,4 @@ entries:
     urls:
     - https://github.com/SimCubeLtd/simcube-helm-charts/releases/download/octopusdeploy-1.0.0/octopusdeploy-1.0.0.tgz
     version: 1.0.0
-generated: "2022-06-15T14:16:25.854580017Z"
+generated: "2022-06-15T20:34:27.588726874Z"
