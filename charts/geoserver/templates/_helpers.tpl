@@ -26,6 +26,12 @@ Get the password secret.
 {{- end -}}
 {{- end -}}
 
+{{/*
+Get the Image.
+*/}}
+{{- define "geoserver.image" -}}
+{{- printf "%s/%s:%s" .Values.image.registry .Values.image.repository .Values.image.tag -}}
+{{- end -}}
 
 
 {{/*
