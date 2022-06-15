@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: v2
 appVersion: "2019-CU16-ubuntu-20.04"
 description: SQL Server 2019 Linux Helm Chart
 home: https://hub.docker.com/r/microsoft/mssql-server-linux/
@@ -9,4 +9,4 @@ maintainers:
 name: mssqlserver-2019
 sources:
 - https://hub.docker.com/r/microsoft/mssql-server-linux/
-version: "1.0.10"
+version: "1.0.11"
