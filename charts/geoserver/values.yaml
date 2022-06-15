@@ -1,8 +1,8 @@
-container:
-  image:
-    pullPolicy: Always
-
-appTag: "2.20.4"
+image:
+  registry: "docker.io"
+  repository: "kartoza/geoserver"
+  tag: "2.20.4"
+  pullPolicy: "IfNotPresent"
 
 geoserverDataDir: /opt/geoserver/data_dir
 geowebcacheCacheDir: /opt/geoserver/data_dir/gwc
@@ -16,6 +16,14 @@ geoserverUser: admin
 # For prefilled password
 # It will be stored in secret later
 geoserverPassword:
+
+labels:
+annotations:
+podLabels:
+podAnnotations:
+resources:
+enableJSONP:
+
 
 # Use this if you have predefined secrets
 existingSecret: |
