@@ -1,0 +1,13 @@
+apiVersion: v2
+appVersion: "0.3.0"
+description: BaGet Nuget and Symbol Server
+home: https://loic-sharma.github.io/BaGet/
+icon: https://icons.iconarchive.com/icons/google/noto-emoji-food-drink/256/32373-baguette-bread-icon.png
+maintainers:
+- email: info@simcube.co.uk
+  name: simcube
+name: baget
+sources:
+- https://github.com/loic-sharma/BaGet
+- https://hub.docker.com/r/loicsharma/baget
+version: "1.0.0"
