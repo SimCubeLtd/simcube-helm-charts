@@ -44,11 +44,11 @@ spec:
                   name: {{ template "baget.fullname" . }}-apikey-secret
                   key: apiKey
             - name: PackageDeletionBehavior
-              value: {{ .Values.packageDeletionBehavior }}
+              value: {{ .Values.packageDeletionBehavior | quote }}
             - name: AllowPackageOverrides
-              value: {{ .Values.allowPackageOverrides }}
+              value: {{ .Values.allowPackageOverrides | quote }}
             - name: Database__Type
-              value: {{ .Values.database.type }}
+              value: {{ .Values.database.type | quote }}
             {{- if .Values.database.secretName }}
             - name: Database__ConnectionString
               valueFrom:
