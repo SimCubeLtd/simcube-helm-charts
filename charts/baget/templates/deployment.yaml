@@ -43,6 +43,8 @@ spec:
                 secretKeyRef:
                   name: {{ template "baget.fullname" . }}-apikey-secret
                   key: apiKey
+            - name: ASPNETCORE_URLS
+              value: "http://+:{{ .Values.service.port }}"
             - name: PackageDeletionBehavior
               value: {{ .Values.packageDeletionBehavior | quote }}
             - name: AllowPackageOverrides
