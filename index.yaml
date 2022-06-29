@@ -3,6 +3,23 @@ entries:
   baget:
   - apiVersion: v2
     appVersion: 0.3.0
+    created: "2022-06-29T22:05:57.84205024Z"
+    description: BaGet Nuget and Symbol Server
+    digest: 2542878dee91246638194df5e4db4e5da19067bdacfb56034955cbaa039f7b79
+    home: https://loic-sharma.github.io/BaGet/
+    icon: https://icons.iconarchive.com/icons/google/noto-emoji-food-drink/256/32373-baguette-bread-icon.png
+    maintainers:
+    - email: info@simcube.co.uk
+      name: simcube
+    name: baget
+    sources:
+    - https://github.com/loic-sharma/BaGet
+    - https://hub.docker.com/r/loicsharma/baget
+    urls:
+    - https://github.com/SimCubeLtd/simcube-helm-charts/releases/download/baget-1.0.2/baget-1.0.2.tgz
+    version: 1.0.2
+  - apiVersion: v2
+    appVersion: 0.3.0
     created: "2022-06-29T21:50:20.60580875Z"
     description: BaGet Nuget and Symbol Server
     digest: 314a27c5d21cd779eaca3db2e33791e7b6f1f6a6cbc2f965b668d1c4d1b439d2
@@ -531,4 +548,4 @@ entries:
     urls:
     - https://github.com/SimCubeLtd/simcube-helm-charts/releases/download/octopusdeploy-1.0.0/octopusdeploy-1.0.0.tgz
     version: 1.0.0
-generated: "2022-06-29T21:50:20.605979761Z"
+generated: "2022-06-29T22:05:57.842178142Z"
