@@ -10,4 +10,4 @@ name: baget
 sources:
 - https://github.com/loic-sharma/BaGet
 - https://hub.docker.com/r/loicsharma/baget
-version: "1.0.1"
+version: "1.0.2"

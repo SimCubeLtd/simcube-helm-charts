@@ -14,7 +14,7 @@ apiKey: ""
 # Possible values HardDelete, and unlist.
 packageDeletionBehavior: "HardDelete"
 # Should you be allowed to upload the same package version
-allowPackageOverrides: true
+allowPackageOverrides: "true"
 
 imagePullSecrets: []
 nameOverride: ""
