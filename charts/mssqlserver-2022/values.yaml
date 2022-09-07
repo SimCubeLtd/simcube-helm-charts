@@ -3,8 +3,10 @@ acceptEula:
 edition:
   value: Developer
 collation: SQL_Latin1_General_CP1_CI_AS
+dataDir: /var/opt/mssql
 lcid: 1033
 hadr: 0
+replicaCount: 1
 # Override sapassword in templates/secret.yaml
 # sapassword: "MyStrongPassword1234"
 image:
