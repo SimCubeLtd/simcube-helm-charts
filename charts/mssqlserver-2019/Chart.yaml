@@ -9,4 +9,4 @@ maintainers:
 name: mssqlserver-2019
 sources:
 - https://hub.docker.com/r/microsoft/mssql-server-linux/
-version: "1.0.11"
+version: "1.1.0"
