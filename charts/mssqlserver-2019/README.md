@@ -107,6 +107,7 @@ The configuration parameters in this section control the resources requested and
 | pod.annotations   | Kubernetes pod annotations                                                                    | `{}`                             |
 | pod.labels        | Kubernetes pod labels                                                                         | `{}`                             |
 | collation        | Default collation for SQL Server                                                               | `SQL_Latin1_General_CP1_CI_AS`   |
+| dataDir          | Specify the default SQL data directory                                                         | `/var/opt/mssql`                 |
 | lcid             | Default languages for SQL Server                                                               | `1033`                           |
 | hadr             | Enable Availability Group                                                                      | `0`                              |
 | replicaCount     | Set the number of replica                                                                      | `1`                              |

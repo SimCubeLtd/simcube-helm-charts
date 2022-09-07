@@ -55,7 +55,7 @@ spec:
                  name: {{ template "mssql.fullname" . }}-secret
                  key: sapassword
             - name: MSSQL_DATA_DIR
-              value: /var/opt/mssql
+              value: {{ .Values.dataDir }}
             - name: MSSQL_TCP_PORT
               value: "{{ .Values.service.port }}"
             - name: MSSQL_COLLATION
