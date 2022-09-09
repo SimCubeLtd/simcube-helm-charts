@@ -1,7 +1,7 @@
 apiVersion: v2
 name: geoserver
-version: "1.0.10"
-appVersion: "2.20.4"
+version: "1.0.11"
+appVersion: "2.21.1"
 description: Chart for GeoServer
 keywords:
   - GeoServer
