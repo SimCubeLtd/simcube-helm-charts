@@ -544,6 +544,16 @@ entries:
     version: 1.0.1
   octopusdeploy:
   - apiVersion: v2
+    appVersion: 2022.3.10653
+    created: "2022-10-15T02:23:13.872031557Z"
+    description: Octopus Deploy server as a HA Kubernetes deployment
+    digest: bdfe6865f25e09cf9080a866302ec6132c372b454ef11871aad990768200b51a
+    name: octopusdeploy
+    type: application
+    urls:
+    - https://github.com/SimCubeLtd/simcube-helm-charts/releases/download/octopusdeploy-1.0.13/octopusdeploy-1.0.13.tgz
+    version: 1.0.13
+  - apiVersion: v2
     appVersion: 2022.3.10600
     created: "2022-10-02T01:41:10.965846107Z"
     description: Octopus Deploy server as a HA Kubernetes deployment
@@ -673,4 +683,4 @@ entries:
     urls:
     - https://github.com/SimCubeLtd/simcube-helm-charts/releases/download/octopusdeploy-1.0.0/octopusdeploy-1.0.0.tgz
     version: 1.0.0
-generated: "2022-10-02T01:41:10.96607692Z"
+generated: "2022-10-15T02:23:13.872156459Z"
