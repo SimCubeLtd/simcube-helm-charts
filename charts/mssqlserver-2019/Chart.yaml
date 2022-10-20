@@ -1,12 +1,12 @@
 apiVersion: v2
 appVersion: "2019-CU16-ubuntu-20.04"
 description: SQL Server 2019 Linux Helm Chart
-home: https://hub.docker.com/r/microsoft/mssql-server-linux/
+home: https://hub.docker.com/_/microsoft-mssql-server
 icon: https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1I4Dx
 maintainers:
 - email: info@simcube.co.uk
   name: simcube
 name: mssqlserver-2019
 sources:
-- https://hub.docker.com/r/microsoft/mssql-server-linux/
-version: "1.1.0"
+- https://hub.docker.com/_/microsoft-mssql-server
+version: "1.2.0"

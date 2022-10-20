@@ -3,7 +3,7 @@ Please read the License Terms Carefully.  The can be found End-User Licensing Ag
 
 
 License Terms: https://go.microsoft.com/fwlink/?linkid=857698
-Docker Hub Resource: https://hub.docker.com/r/microsoft/mssql-server-linux
+Docker Hub Resource: https://hub.docker.com/_/microsoft-mssql-server
 
 Edition for this installation: {{ .Values.edition.value }}
 SQL Server Name: {{ template "mssql.fullname" . }}.{{ .Release.Namespace }}
@@ -17,7 +17,7 @@ Gain access to your SQL Server:
 $ printf $(kubectl get secret --namespace {{ .Release.Namespace }} {{ template "mssql.fullname" . }}-secret -o jsonpath="{.data.sapassword}" | base64 --decode);echo
 2. You can test that SQL Server is available by the service port with with the following set of command:
 (Note: You will be prompted for the SA password, use the password generated in Step 1)
-$ kubectl run mssqlcli --image=microsoft/mssql-tools -ti --restart=Never --rm=true -- /bin/bash
+$ kubectl run mssqlcli --image=mcr.microsoft.com/mssql-tools -ti --restart=Never --rm=true -- /bin/bash
 $ sqlcmd -S {{ template "mssql.fullname" . }}.{{ .Release.Namespace }},{{ .Values.service.port }} -U sa 
 $ Password: <Enter Password for SA>
 
