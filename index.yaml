@@ -447,6 +447,22 @@ entries:
   mssqlserver-2019:
   - apiVersion: v2
     appVersion: 2019-CU16-ubuntu-20.04
+    created: "2022-10-20T10:54:08.648629357Z"
+    description: SQL Server 2019 Linux Helm Chart
+    digest: e46beb8fcaf155718211137683a9ab28731cf8718f96e7b4629889072916614b
+    home: https://hub.docker.com/_/microsoft-mssql-server
+    icon: https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1I4Dx
+    maintainers:
+    - email: info@simcube.co.uk
+      name: simcube
+    name: mssqlserver-2019
+    sources:
+    - https://hub.docker.com/_/microsoft-mssql-server
+    urls:
+    - https://github.com/SimCubeLtd/simcube-helm-charts/releases/download/mssqlserver-2019-1.2.0/mssqlserver-2019-1.2.0.tgz
+    version: 1.2.0
+  - apiVersion: v2
+    appVersion: 2019-CU16-ubuntu-20.04
     created: "2022-09-07T05:47:01.927292976Z"
     description: SQL Server 2019 Linux Helm Chart
     digest: 4603fefc66de0b0273dcff8527ae9cba19c2343f86b790a70e7b3cb0ba02da74
@@ -494,6 +510,22 @@ entries:
     - https://github.com/SimCubeLtd/simcube-helm-charts/releases/download/mssqlserver-2019-1.0.10/mssqlserver-2019-1.0.10.tgz
     version: 1.0.10
   mssqlserver-2022:
+  - apiVersion: v2
+    appVersion: "2022"
+    created: "2022-10-20T10:54:08.96896626Z"
+    description: SQL Server 2022 Linux Helm Chart
+    digest: 1ec9d66043b3d439d00f86b3f28cf39c82b48d872761b17e0a605eb3b2b042a9
+    home: https://hub.docker.com/_/microsoft-mssql-server
+    icon: https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1I4Dx
+    maintainers:
+    - email: info@simcube.co.uk
+      name: simcube
+    name: mssqlserver-2022
+    sources:
+    - https://hub.docker.com/_/microsoft-mssql-server
+    urls:
+    - https://github.com/SimCubeLtd/simcube-helm-charts/releases/download/mssqlserver-2022-1.2.0/mssqlserver-2022-1.2.0.tgz
+    version: 1.2.0
   - apiVersion: v2
     appVersion: "2022"
     created: "2022-09-07T05:47:02.250110628Z"
@@ -683,4 +715,4 @@ entries:
     urls:
     - https://github.com/SimCubeLtd/simcube-helm-charts/releases/download/octopusdeploy-1.0.0/octopusdeploy-1.0.0.tgz
     version: 1.0.0
-generated: "2022-10-15T02:23:13.872156459Z"
+generated: "2022-10-20T10:54:08.969252062Z"
