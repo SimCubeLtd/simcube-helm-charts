@@ -69,7 +69,7 @@ $ printf $(kubectl get secret --namespace default mymssql-mssql-linux-secret -o 
 This command will create a pod called `mssqlcli` that will include the SQL Server Commandline `sqlcmd` and start at a bash prompt.
 
 ```console
-$ kubectl run mssqlcli --image=microsoft/mssql-tools -ti --restart=Never --rm=true -- /bin/bash
+$ kubectl run mssqlcli --image=mcr.microsoft.com/mssql-tools -ti --restart=Never --rm=true -- /bin/bash
 $ sqlcmd -S mymssql-mssql-linux -U sa
 Password: <Enter SA Password>
 $ 1> select @@VERSION;
@@ -90,9 +90,9 @@ The configuration parameters in this section control the resources requested and
 | Parameter        | Description                                                                                    | Default                          |
 | ---------------- | ---------------------------------------------------------------------------------------------- | -------------------------------- |
 | acceptEula.value | EULA that needs to be accepted.  It will need to be changed via commandline or values.yaml.    | `n`                              |
-| edition.value    | The edition of SQL Server to install.  See section [Editions](#sql-server-for-linux-editions). | `Developer`                        |
+| edition.value    | The edition of SQL Server to install.  See section [Editions](#sql-server-for-linux-editions). | `Developer`                      |
 | sapassword       | Password for sa login                                                                          | `Random (20-AlphNum)`<sup>1<sup> |
-| image.repository | The docker hub repo for SQL Server                                                             | `microsoft/mssql-server-linux`   |
+| image.repository | The docker hub repo for SQL Server                                                             | `mcr.microsoft.com/mssql/server` |
 | image.tag        | The tag for the image                                                                          | `2017-CU5`                       |
 | image.pullPolicy | The pull policy for the deployment                                                             | `IfNotPresent`                   |
 | image.pullSecrets   | Specify an image pull secret if needed  | `Commented Out`  |
