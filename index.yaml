@@ -105,6 +105,25 @@ entries:
     version: 1.0.0
   geoserver:
   - apiVersion: v2
+    appVersion: 2.22.0
+    created: "2023-02-05T21:44:58.960066424Z"
+    description: Chart for GeoServer
+    digest: 01925972caf81dd2eb538a8d4bf56ac83afe22d011ed29912b5a08fb69f7b9b0
+    home: http://geoserver.org
+    icon: https://avatars.githubusercontent.com/u/186522?s=280&v=4
+    keywords:
+    - GeoServer
+    - GIS
+    maintainers:
+    - email: info@simcube.co.uk
+      name: simcube
+    name: geoserver
+    sources:
+    - https://github.com/geoserver/geoserver
+    urls:
+    - https://github.com/SimCubeLtd/simcube-helm-charts/releases/download/geoserver-1.0.12/geoserver-1.0.12.tgz
+    version: 1.0.12
+  - apiVersion: v2
     appVersion: 2.21.1
     created: "2022-09-09T10:54:12.134401698Z"
     description: Chart for GeoServer
@@ -625,6 +644,16 @@ entries:
     version: 1.0.1
   octopusdeploy:
   - apiVersion: v2
+    appVersion: 2022.3.10929
+    created: "2023-02-05T21:44:59.148799626Z"
+    description: Octopus Deploy server as a HA Kubernetes deployment
+    digest: 00b34bcd828b831b2463b2e40913fa433dc8a2d925467b251dba34b509ac5967
+    name: octopusdeploy
+    type: application
+    urls:
+    - https://github.com/SimCubeLtd/simcube-helm-charts/releases/download/octopusdeploy-1.0.15/octopusdeploy-1.0.15.tgz
+    version: 1.0.15
+  - apiVersion: v2
     appVersion: 2022.3.10674
     created: "2022-10-20T10:56:37.822024858Z"
     description: Octopus Deploy server as a HA Kubernetes deployment
@@ -774,4 +803,4 @@ entries:
     urls:
     - https://github.com/SimCubeLtd/simcube-helm-charts/releases/download/octopusdeploy-1.0.0/octopusdeploy-1.0.0.tgz
     version: 1.0.0
-generated: "2023-02-05T21:41:36.934971907Z"
+generated: "2023-02-05T21:44:59.149049836Z"
