@@ -15,6 +15,8 @@ apiKey: ""
 packageDeletionBehavior: "HardDelete"
 # Should you be allowed to upload the same package version
 allowPackageOverrides: "true"
+# The application root URL for usage in reverse proxy scenarios
+pathBase: ""
 
 imagePullSecrets: []
 nameOverride: ""
