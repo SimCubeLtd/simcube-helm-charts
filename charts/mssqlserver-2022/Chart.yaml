@@ -9,4 +9,4 @@ maintainers:
 name: mssqlserver-2022
 sources:
 - https://hub.docker.com/_/microsoft-mssql-server
-version: "1.2.0"
+version: "1.2.1"
