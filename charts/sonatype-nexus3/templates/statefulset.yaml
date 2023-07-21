@@ -1,0 +1,262 @@
+{{- if not .Values.deployment -}}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "nexus.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "nexus.labels" . | nindent 4 }}
+spec:
+  serviceName: {{ include "nexus.fullname" . }}
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "nexus.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "nexus.selectorLabels" . | nindent 8 }}
+      {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      annotations:
+        checksum/logback: {{ include (print $.Template.BasePath "/configmap-logback.yaml") . | sha256sum }}
+        checksum/properties: {{ include (print $.Template.BasePath "/configmap-properties.yaml") . | sha256sum }}
+        checksum/config: {{ include (print $.Template.BasePath "/configmap-config.yaml") . | sha256sum }}
+      {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      {{- with default .Values.image.pullSecrets .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "nexus.serviceAccountName" . }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.priorityClassName }}
+      priorityClassName: {{ . | quote }}
+      {{- end }}
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
+    {{- if or .Values.caCerts.enabled .Values.plugins .Values.extraInitContainers .Values.chownDataDir }}
+      initContainers:
+      {{- if .Values.caCerts.enabled }}
+        - name: ca-certs
+          image: adoptopenjdk:8-jdk-hotspot
+          {{- with .Values.env }}
+          env:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          command: ["/bin/sh"]
+          args: ["-c", "mkdir -p /nexus-data/keystores; cp -f \"${JAVA_HOME}/jre/lib/security/cacerts\" /nexus-data/keystores/cacerts; for f in /nexus-data/secrets/cas/*; do keytool -importcert -file \"${f}\" -alias \"$(basename \"${f}\")\" -keystore /nexus-data/keystores/cacerts -storepass changeit -trustcacerts -noprompt; done;"]
+          volumeMounts:
+            - mountPath: /nexus-data
+              name: {{ include "nexus.pvcname" . }}
+            - mountPath: /nexus-data/secrets/cas
+              name: nexus3-cas
+      {{- end }}
+      {{- if .Values.plugins }}
+        - name: download-plugins
+          image: alpine:3
+          {{- with .Values.env }}
+          env:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - |
+          {{- range .Values.plugins }}
+              wget -O /deploy/{{ .name }}.kar {{ .url }}
+          {{- end }}
+          volumeMounts:
+            - mountPath: /deploy
+              name: nexus-deploy
+      {{- end }}
+      {{- with .Values.extraInitContainers }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.chownDataDir }}
+        - name: volume-mount
+          image: alpine:3
+          {{- with .Values.env }}
+          env:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          command: ["/bin/sh"]
+          args: ["-c", "mkdir -p /nexus-data/etc; chown -R 200:200 /nexus-data;"]
+          volumeMounts:
+            - mountPath: /nexus-data
+              name: {{ include "nexus.pvcname" . }}
+      {{- end }}
+      {{- end }}
+      containers:
+        - name: nexus3
+          {{- with .Values.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          image: {{ include "nexus.image" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: INSTALL4J_ADD_VM_PARAMS
+              {{- if .Values.caCerts.enabled }}
+              value: {{ printf "-Xms%s -Xmx%s %s -Djava.util.prefs.userRoot=/nexus-data/javaprefs -Djavax.net.ssl.trustStore=/nexus-data/keystores/cacerts %s" .Values.envVars.jvmMinHeapSize .Values.envVars.jvmMaxHeapSize .Values.envVars.jvmAdditionalMemoryOptions .Values.envVars.jvmAdditionalOptions | quote }}
+              {{- else }}
+              value: {{ printf "-Xms%s -Xmx%s %s -Djava.util.prefs.userRoot=/nexus-data/javaprefs %s" .Values.envVars.jvmMinHeapSize .Values.envVars.jvmMaxHeapSize .Values.envVars.jvmAdditionalMemoryOptions .Values.envVars.jvmAdditionalOptions | quote }}
+              {{- end }}
+          {{- if or .Values.rootPassword.secret .Values.config.rootPassword.secret }}
+            - name: NEXUS_SECURITY_INITIAL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ default .Values.rootPassword.secret .Values.config.rootPassword.secret }}
+                  key: {{ default .Values.rootPassword.key .Values.config.rootPassword.key }}
+          {{- end }}
+          {{- with .Values.env }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- if and .Values.config.enabled (or .Values.rootPassword.secret .Values.config.rootPassword.secret) }}
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - "/bin/bash"
+                  - "-c"
+                  - "${SONATYPE_DIR}/nexus/conf/configure.sh > /proc/1/fd/1 2>/proc/1/fd/2"
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: 8081
+              protocol: TCP
+          {{- range .Values.service.additionalPorts }}
+            - name: {{ .name }}
+              containerPort: {{ .containerPort }}
+              protocol: TCP
+          {{- end }}
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
+          volumeMounts:
+            - mountPath: /nexus-data
+              name: {{ include "nexus.pvcname" . }}
+            - mountPath: /opt/sonatype/nexus/etc/logback
+              name: {{ include "nexus.fullname" . }}-logback
+              readOnly: true
+            - mountPath: /nexus-data/etc/nexus.properties
+              name: {{ include "nexus.fullname" . }}-properties
+              subPath: nexus.properties
+              readOnly: true
+          {{- if .Values.plugins }}
+            - mountPath: /opt/sonatype/nexus/deploy
+              name: nexus-deploy
+          {{- end }}
+          {{- if and .Values.config.enabled (or .Values.rootPassword.secret .Values.config.rootPassword.secret) }}
+            - mountPath: /opt/sonatype/nexus/conf
+              name: {{ include "nexus.fullname" . }}-conf
+              readOnly: true
+          {{- if .Values.config.ldap.enabled }}
+            - mountPath: /opt/sonatype/nexus/secret/ldap.password
+              name: {{ .Values.config.ldap.authPassword.secret }}
+              subPath: {{ .Values.config.ldap.authPassword.key }}
+              readOnly: true
+          {{- end }}
+          {{- if .Values.config.repoCredentials.enabled }}
+            - mountPath: /opt/sonatype/nexus/secret/repo-credentials
+              name: {{ .Values.config.repoCredentials.secret }}
+              readOnly: true
+          {{- end }}
+          {{- end }}
+          {{- with .Values.extraVolumeMounts }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      volumes:
+      {{- if not .Values.persistence.enabled }}
+        - name: {{ include "nexus.pvcname" . }}
+          emptyDir: {}
+      {{- end }}
+      {{- if .Values.caCerts.enabled }}
+        - name: nexus3-cas
+          secret:
+            secretName: {{ .Values.caCerts.secret }}
+      {{- end }}
+        - name: {{ include "nexus.fullname" . }}-logback
+          configMap:
+            name: {{ include "nexus.fullname" . }}-logback
+            defaultMode: 0755
+        - name: {{ include "nexus.fullname" . }}-properties
+          configMap:
+            name: {{ include "nexus.fullname" . }}-properties
+            defaultMode: 0755
+      {{- if .Values.plugins }}
+        - name: nexus-deploy
+          emptyDir: {}
+      {{- end }}
+      {{- if and .Values.config.enabled (or .Values.rootPassword.secret .Values.config.rootPassword.secret) }}
+        - name: {{ include "nexus.fullname" . }}-conf
+          configMap:
+            name: {{ include "nexus.fullname" . }}-conf
+            defaultMode: 0755
+      {{- if and .Values.config.ldap.enabled }}
+        - name: {{ .Values.config.ldap.authPassword.secret }}
+          secret:
+            secretName: {{ .Values.config.ldap.authPassword.secret }}
+      {{- end }}
+      {{- if .Values.config.repoCredentials.enabled }}
+        - name: {{ .Values.config.repoCredentials.secret }}
+          secret:
+            secretName: {{ .Values.config.repoCredentials.secret }}
+      {{- end }}
+      {{- end }}
+      {{- with .Values.extraVolumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      {{- $_ := include "nexus.patchAffinity" $ }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.topologySpreadConstraints }}
+      {{- $_ := include "nexus.patchTopologySpreadConstraints" $ }}
+      topologySpreadConstraints:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  {{- if .Values.persistence.enabled }}
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ include "nexus.pvcname" . }}
+        labels:
+          {{- include "nexus.labels" . | nindent 10 }}
+        {{- with .Values.persistence.annotations }}
+        annotations:
+          {{- . | toYaml | nindent 10 }}
+        {{- end }}
+      spec:
+        accessModes:
+          - {{ .Values.persistence.accessMode | quote }}
+        {{- with .Values.persistence.storageClass }}
+        {{- if (eq "-" .) }}
+        storageClassName: ""
+        {{- else }}
+        storageClassName: {{ . | quote }}
+        {{- end }}
+        {{- end }}
+        resources:
+          requests:
+            storage: {{ .Values.persistence.size | quote }}
+  {{- end }}
+{{- end }}

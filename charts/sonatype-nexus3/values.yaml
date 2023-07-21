@@ -1,0 +1,248 @@
+image:
+  repository: sonatype/nexus3
+  # Overrides the image tag whose default is {{ .Chart.AppVersion }}
+  tag: ""
+  pullPolicy: IfNotPresent
+  pullSecrets: []
+
+imagePullSecrets: []
+
+nameOverride: ""
+fullnameOverride: ""
+
+commonLabels: {}
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Labels to add to the service account
+  labels: {}
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+  automountToken: false
+
+deployment: true
+
+podLabels: {}
+podAnnotations: {}
+
+podSecurityContext:
+  fsGroup: 200
+
+securityContext:
+  runAsGroup: 200
+  runAsUser: 200
+
+priorityClassName: ""
+
+livenessProbe:
+  httpGet:
+    path: /service/rest/v1/status
+    port: http
+  initialDelaySeconds: 60
+  periodSeconds: 30
+  failureThreshold: 10
+  timeoutSeconds: 1
+
+readinessProbe:
+  httpGet:
+    path: /service/rest/v1/status
+    port: http
+  initialDelaySeconds: 60
+  periodSeconds: 30
+  failureThreshold: 10
+  timeoutSeconds: 1
+
+service:
+  type: ClusterIP
+  clusterIP:
+  annotations: {}
+  port: 8081
+  additionalPorts: []
+  #   - port: 8082
+  #     name: docker-group
+  #     containerPort: 8082
+  #     host: nexus-docker.local
+  #   - port: 8083
+  #     name: docker-hosted
+  #     containerPort: 8083
+  #     host: nexus-docker-hosted.local
+
+metrics:
+  enabled: false
+  serviceMonitor:
+    enabled: false
+    additionalLabels: {}
+    endpointConfig: {}
+    interval:
+
+ingress:
+  enabled: false
+  annotations: {}
+  ingressClassName: ""
+  hosts: []
+  #   - nexus.local
+  tls: []
+  #   - hosts:
+  #       - nexus.local
+  #       - nexus-docker.local
+  #       - nexus-docker-hosted.local
+  #     secretName: nexus-local-tls
+
+persistence:
+  enabled: false
+  annotations: {}
+  # existingClaim: existing-pvc
+  accessMode: ReadWriteOnce
+  storageClass: standard
+  size: 8Gi
+
+extraVolumeMounts: []
+
+resources: {}
+# We usually recommend not to specify default resources and to leave this as a conscious
+# choice for the user. This also increases chances charts run on environments with little
+# resources, such as Minikube. If you do want to specify resources, uncomment the following
+# lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+#   limits:
+#     cpu: 100m
+#     memory: 128Mi
+#   requests:
+#     cpu: 100m
+#     memory: 128Mi
+
+chownDataDir: true
+
+extraInitContainers: []
+
+extraVolumes: []
+
+terminationGracePeriodSeconds: 30
+
+nodeSelector: {}
+
+affinity: {}
+
+topologySpreadConstraints: []
+
+tolerations: []
+
+caCerts:
+  enabled: false
+  secret:
+
+envVars:
+  jvmMinHeapSize: 1024m
+  jvmMaxHeapSize: 1024m
+  jvmAdditionalMemoryOptions: "-XX:MaxDirectMemorySize=2048m"
+  jvmAdditionalOptions: ""
+
+env: []
+#   - name: VARIABLE
+#     value: my-value
+
+logback:
+  maxHistory: 30
+
+properties:
+  - nexus.scripts.allowCreation=true
+  # - nexus.golang.hosted=true
+
+plugins: []
+#   - name: nexus-repository-composer
+#     url: https://repo1.maven.org/maven2/org/sonatype/nexus/plugins/nexus-repository-composer/0.0.29/nexus-repository-composer-0.0.29-bundle.kar
+
+rootPassword:
+  secret:
+  key: password
+
+config:
+  enabled: false
+  rootPassword:
+    secret:
+    key: password
+  anonymous:
+    enabled: false
+    roles:
+      - nx-anonymous
+      - nx-metrics
+  realms:
+    enabled: false
+    values: []
+    #   - NexusAuthenticatingRealm
+    #   - NexusAuthorizingRealm
+    #   - LdapRealm
+    #   - DockerToken
+    #   - NpmToken
+    #   - NuGetApiKey
+    #   - rutauth-realm
+  roles: []
+  #   - id: nexus-administrators
+  #     source: default
+  #     name: nexus-administrators
+  #     description: LDAP Administrator Role
+  #     privileges: []
+  #     roles:
+  #       - nx-admin
+  users: []
+  #   - userId: test
+  #     firstName: Test
+  #     lastName: User
+  #     emailAddress: test@example.org
+  #     source: default
+  #     status: active
+  #     roles:
+  #       - nx-anonymous
+  #     externalRoles: []
+  ldap:
+    enabled: false
+    name:
+    protocol: ldaps
+    useTrustStore: true
+    connectionTimeoutSeconds: 30
+    connectionRetryDelaySeconds: 300
+    maxIncidentsCount: 3
+    host:
+    port: 636
+    authScheme: simple
+    authUsername:
+    authPassword:
+      secret:
+      key:
+    authRealm:
+    searchBase:
+    userBaseDn:
+    userSubtree: false
+    userObjectClass: user
+    userLdapFilter:
+    userIdAttribute: sAMAccountName
+    userRealNameAttribute: cn
+    userEmailAddressAttribute: email
+    userPasswordAttribute:
+    ldapGroupsAsRoles: false
+    groupType: dynamic
+    userMemberOfAttribute: memberOf
+    groupBaseDn:
+    groupSubtree: false
+    groupObjectClass:
+    groupIdAttribute:
+    groupMemberAttribute:
+    groupMemberFormat:
+  blobStores: []
+  #   - name: ExampleFileBlobStore
+  #     type: file
+  #     path: /nexus-data/blobs/foo
+  #     softQuota:
+  #       type: spaceRemainingQuota
+  #       limit: 500
+  cleanup: []
+ 
+  repoCredentials:
+    enabled: false
+    secret:
+  repos: []
+  
+  tasks: []
