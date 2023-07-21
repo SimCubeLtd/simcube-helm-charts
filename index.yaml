@@ -916,4 +916,28 @@ entries:
     urls:
     - https://github.com/SimCubeLtd/simcube-helm-charts/releases/download/octopusdeploy-1.0.0/octopusdeploy-1.0.0.tgz
     version: 1.0.0
-generated: "2023-07-21T09:00:11.173370189Z"
+  sonatype-nexus3:
+  - apiVersion: v2
+    appVersion: 3.58.0
+    created: "2023-07-21T17:59:43.629387039Z"
+    description: Helm chart for Sonatype Nexus 3 OSS.
+    digest: 41662ee0bd4b2c283ef78b19f708e6a89d8b17df818654b1fcd4b81a144af81c
+    home: https://www.sonatype.com/nexus-repository-oss
+    icon: https://help.sonatype.com/docs/files/331022/34537964/3/1564671303641/NexusRepo_Icon.png
+    keywords:
+    - artifacts
+    - dependency
+    - management
+    - sonatype
+    - nexus
+    - repository
+    name: sonatype-nexus3
+    sources:
+    - https://github.com/sonatype/docker-nexus3
+    - https://hub.docker.com/r/sonatype/nexus3
+    - https://github.com/SimCubeLtd/simcube-helm-charts
+    type: application
+    urls:
+    - https://github.com/SimCubeLtd/simcube-helm-charts/releases/download/sonatype-nexus3-1.0.0/sonatype-nexus3-1.0.0.tgz
+    version: 1.0.0
+generated: "2023-07-21T17:59:43.629576938Z"
