@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "mssql.name" . }}
+  name: {{ template "mssql.fullname" . }}
   labels:
-    app: {{ template "mssql.name" . }}
+    app: {{ template "mssql.fullname" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -30,5 +30,5 @@ spec:
     targetPort: mssql
     protocol: TCP
   selector:
-    app: {{ template "mssql.name" . }}
+    app: {{ template "mssql.fullname" . }}
     release: {{ .Release.Name }}

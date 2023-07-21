@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ template "mssql.fullname" . }}
   labels:
-    app: {{ template "mssql.name" . }}
+    app: {{ template "mssql.fullname" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -18,12 +18,12 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "mssql.name" . }}
+      app: {{ template "mssql.fullname" . }}
       release: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ template "mssql.name" . }}
+        app: {{ template "mssql.fullname" . }}
         release: {{ .Release.Name }}
 {{- if .Values.pod.labels }}
 {{ toYaml .Values.pod.labels | indent 8 }}
