@@ -100,6 +100,7 @@ The configuration parameters in this section control the resources requested and
 | service.headless   | Allows you to setup a headless service  | `false`  |
 | service.type     | Service Type                                                                                   | `ClusterIP`                      |
 | service.port     | Service Port                                                                                   | `1433`                           |
+| service.nodePort | Service NodePort                                                                               | `Random Port`                    |
 | service.annotations | Kubernetes service annotations                                                              | `{}`                             |
 | service.labels   | Kubernetes service labels                                                                      | `{}`                             |
 | deployment.annotations | Kubernetes deployment annotations                                                        | `{}`                             |
