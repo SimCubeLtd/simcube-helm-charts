@@ -1,0 +1,70 @@
+{{- if .Values.ingress.enabled -}}
+{{- $apiIsStable := eq (include "nexus.ingress.isStable" .) "true" -}}
+{{- $ingressSupportsPathType := eq (include "nexus.ingress.supportsPathType" .) "true" -}}
+{{- $serviceName := include "nexus.fullname" . -}}
+{{- $servicePort := .Values.service.port -}}
+apiVersion: {{ include "nexus.ingress.apiVersion" . }}
+kind: Ingress
+metadata:
+  name: {{ $serviceName }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "nexus.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+{{- if and $apiIsStable .Values.ingress.ingressClassName }}
+  ingressClassName: {{ .Values.ingress.ingressClassName }}
+{{- end }}
+  rules:
+  {{- range .Values.ingress.hosts }}
+    - host: {{ . | quote }}
+      http:
+        paths:
+          - path: /
+            {{- if $ingressSupportsPathType }}
+            pathType: Prefix
+            {{- end }}
+            backend:
+            {{- if $apiIsStable }}
+              service:
+                name: {{ $serviceName }}
+                port:
+                  number: {{ $servicePort }}
+            {{- else }}
+              serviceName: {{ $serviceName }}
+              servicePort: http
+            {{- end }}
+  {{- end }}
+  {{- range .Values.service.additionalPorts }}
+    - host: {{ .host | quote }}
+      http:
+        paths:
+          - path: /
+            {{- if $ingressSupportsPathType }}
+            pathType: Prefix
+            {{- end }}
+            backend:
+            {{- if $apiIsStable }}
+              service:
+                name: {{ $serviceName }}
+                port:
+                  number: {{ .port }}
+            {{- else }}
+              serviceName: {{ $serviceName }}
+              servicePort: {{ .name }}
+            {{- end }}
+  {{- end }}
+  {{- if .Values.ingress.tls }}
+  tls:
+  {{- range .Values.ingress.tls }}
+    - hosts:
+    {{- range .hosts }}
+        - {{ quote . }}
+    {{- end }}
+      secretName: {{ .secretName }}
+  {{- end }}
+  {{- end }}
+{{- end }}

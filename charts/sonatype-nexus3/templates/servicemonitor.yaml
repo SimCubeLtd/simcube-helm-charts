@@ -1,0 +1,30 @@
+{{- if and (.Values.metrics.enabled) (.Values.metrics.serviceMonitor.enabled) -}}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "nexus.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "nexus.labels" . | nindent 4 }}
+  {{- with .Values.metrics.serviceMonitor.additionalLabels }}
+    {{- . | toYaml | nindent 4 }}
+  {{- end }}
+spec:
+  jobLabel: {{ .Release.Name }}
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
+  selector:
+    matchLabels:
+      {{- include "nexus.selectorLabels" . | nindent 6 }}
+  endpoints:
+    - port: http
+      path: /service/metrics/prometheus
+    {{- if .Values.metrics.serviceMonitor.endpointConfig }}
+      {{- toYaml .Values.metrics.serviceMonitor.endpointConfig | nindent 6 }}
+    {{- else }}
+    {{- with .Values.metrics.serviceMonitor.interval }}
+      interval: {{ . }}
+    {{- end }}
+    {{- end }}
+{{- end }}
