@@ -5,8 +5,8 @@ metadata:
   labels:
     {{- include "bytesafe.labels" . | nindent 4 }}
 data:
-  TELEMETRY: {{ .Values.telemetry }}
-  ALLOW_PRIVATE_IPS: {{ .Values.allowPrivateIps }}
+  TELEMETRY: {{ .Values.telemetry | quote }}
+  ALLOW_PRIVATE_IPS: {{ .Values.allowPrivateIps | quote }}
   URL_PREFIX: {{ .Values.urlPrefix }}
 
 {{- if and .Values.redis.enabled .Values.redis.nameOverride }}
@@ -16,9 +16,9 @@ data:
 {{- end }}
 
 {{- if and .Values.redis.enabled .Values.redis.service.port }}
-  REDIS_PORT: {{ .Values.redis.service.port }}
+  REDIS_PORT: {{ .Values.redis.service.port | quote }}
 {{- else if and .Values.externalRedis.enabled .Values.externalRedis.port }}
-  REDIS_PORT: {{ .Values.externalRedis.port}}
+  REDIS_PORT: {{ .Values.externalRedis.port | quote}}
 {{- end }}
 
 {{- if and .Values.postgresql.enabled .Values.postgresql.auth.adminUsername }}
@@ -40,14 +40,14 @@ data:
 {{- end }}
 
 {{- if and .Values.postgresql.enabled .Values.postgresql.containerPorts.postgresql }}
-  DB_PORT: {{ .Values.postgresql.containerPorts.postgresql }}
+  DB_PORT: {{ .Values.postgresql.containerPorts.postgresql | quote }}
 {{- else if and .Values.externalDatabase.enabled .Values.externalDatabase.port }}
-  DB_PORT: {{ .Values.externalDatabase.port }}
+  DB_PORT: {{ .Values.externalDatabase.port | quote}}
 {{- end }}
 
 {{- if .Values.smtp.enabled }}
   SMTP_HOST: {{ .Values.smtp.host }}
-  SMTP_PORT: {{ .Values.smtp.port }}
+  SMTP_PORT: {{ .Values.smtp.port | quote }}
   SMTP_USER: {{ .Values.smtp.user }}
   SMTP_FROM_ADDRESS: {{ .Values.smtp.from }}
 {{- end}}

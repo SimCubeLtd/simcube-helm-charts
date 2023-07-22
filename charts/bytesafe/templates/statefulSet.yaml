@@ -19,7 +19,7 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ template "bytesafe.fullname" . }}
+      {{- include "bytesafe.selectorLabels" . | nindent 8 }}
     {{- if .Values.pod.labels }}
 {{ toYaml .Values.pod.labels | indent 8 }}
 {{- end }}
