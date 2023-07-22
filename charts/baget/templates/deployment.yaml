@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "bytesafe.fullname" . }}
+  name: {{ include "baget.fullname" . }}
   labels:
-    {{- include "bytesafe.labels" . | nindent 4 }}
+    {{- include "baget.labels" . | nindent 4 }}
 spec:
 {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
 {{- end }}
   selector:
     matchLabels:
-      {{- include "bytesafe.selectorLabels" . | nindent 6 }}
+      {{- include "baget.selectorLabels" . | nindent 6 }}
   template:
     metadata:
     {{- with .Values.podAnnotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       labels:
-        {{- include "bytesafe.selectorLabels" . | nindent 8 }}
+        {{- include "baget.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "bytesafe.serviceAccountName" . }}
+      serviceAccountName: {{ include "baget.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -41,7 +41,7 @@ spec:
             - name: ApiKey
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "bytesafe.fullname" . }}-apikey-secret
+                  name: {{ template "baget.fullname" . }}-apikey-secret
                   key: apiKey
             {{- if .Values.pathBase }}
             - name: PathBase
@@ -64,7 +64,7 @@ spec:
             {{- end }}
             {{- if eq .Values.database.type "Sqlite" .}}
             - name: Database__ConnectionString
-              value: "Data Source=bytesafe.db"
+              value: "Data Source=baget.db"
             {{- end }}
           livenessProbe:
             httpGet:
@@ -75,7 +75,7 @@ spec:
               path: /
               port: http
           volumeMounts:
-            - name: {{ template "bytesafe.fullname" . }}-data
+            - name: {{ template "baget.fullname" . }}-data
               mountPath: /app/packages
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
@@ -92,10 +92,10 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
-        - name: {{ template "bytesafe.fullname" . }}-data
+        - name: {{ template "baget.fullname" . }}-data
           {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
-            claimName: {{ .Values.persistence.existingClaim | default (printf "%s-%s" (include "bytesafe.fullname" .) "data") }}
+            claimName: {{ .Values.persistence.existingClaim | default (printf "%s-%s" (include "baget.fullname" .) "data") }}
           {{- else }}
           emptyDir: {}
           {{- end }}

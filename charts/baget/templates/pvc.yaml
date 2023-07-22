@@ -2,9 +2,9 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ template "bytesafe.fullname" . }}-data
+  name: {{ template "baget.fullname" . }}-data
   labels:
-{{ include "bytesafe.labels" . | indent 4 }}
+{{ include "baget.labels" . | indent 4 }}
 {{- if .Values.persistence.annotations }}
   annotations:
 {{ toYaml .Values.persistence.annotations | indent 4 }}
