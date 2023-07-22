@@ -29,6 +29,8 @@ spec:
 {{- end }}
     spec:
       volumes:
+        - name: bytesafe-tmp
+          emptyDir: {}
       {{- if and .Values.persistence.enabled .Values.persistence.existingClaim }}
         - name: bytesafe-data
           persistentVolumeClaim:
@@ -40,9 +42,6 @@ spec:
           persistentVolumeClaim:
             claimName: {{ template "bytesafe.fullname" . }}-data
       {{- end }}
-      volumes:
-        - name: bytesafe-tmp
-          emptyDir: {}
       containers:
         - name: bytesafe-ce
           image: {{.Values.image.repository}}:{{.Values.image.tag}}
@@ -130,7 +129,6 @@ spec:
                   name: bytesafe-secrets
                   key: DB_PASSWORD
             {{- end}}
-            
             {{- if .Values.smtp.enabled }}
             - name: SMTP_PASSWORD
               valueFrom:
