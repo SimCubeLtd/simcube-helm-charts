@@ -103,6 +103,33 @@ entries:
     urls:
     - https://github.com/SimCubeLtd/simcube-helm-charts/releases/download/baget-1.0.0/baget-1.0.0.tgz
     version: 1.0.0
+  bytesafe-ce:
+  - apiVersion: v2
+    appVersion: 1.0.4
+    created: "2023-07-22T17:53:09.626670432Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 12.6.8
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 17.13.2
+    description: Bytesafe - A Security Platform That Protects You From Open Source
+      Software Supply Chain Attacks
+    digest: 6b6676c4475bbcc0321746b003a8729bd3d06b3ff100e42a0e06012205649e5e
+    home: https://bytesafe.dev/
+    icon: https://gdm-catalog-fmapi-prod.imgix.net/ProductLogo/27c22bec-6e47-479d-9856-efd5d3be4fba.jpeg?auto=format&q=50&w=128&h=128&fit=max&dpr=3
+    maintainers:
+    - email: info@simcube.co.uk
+      name: simcube
+    name: bytesafe-ce
+    sources:
+    - https://github.com/SimCubeLtd/simcube-helm-charts
+    urls:
+    - https://github.com/SimCubeLtd/simcube-helm-charts/releases/download/bytesafe-ce-1.0.0/bytesafe-ce-1.0.0.tgz
+    version: 1.0.0
   geoserver:
   - apiVersion: v2
     appVersion: 2.23.1
@@ -940,4 +967,4 @@ entries:
     urls:
     - https://github.com/SimCubeLtd/simcube-helm-charts/releases/download/sonatype-nexus3-1.0.0/sonatype-nexus3-1.0.0.tgz
     version: 1.0.0
-generated: "2023-07-21T17:59:43.629576938Z"
+generated: "2023-07-22T17:53:09.626793833Z"
