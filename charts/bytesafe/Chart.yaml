@@ -1,0 +1,23 @@
+apiVersion: v2
+appVersion: "1.0.4"
+description: Bytesafe - A Security Platform That Protects You From Open Source Software Supply Chain Attacks
+home: https://bytesafe.dev/
+icon: https://gdm-catalog-fmapi-prod.imgix.net/ProductLogo/27c22bec-6e47-479d-9856-efd5d3be4fba.jpeg?auto=format&q=50&w=128&h=128&fit=max&dpr=3
+maintainers:
+- email: info@simcube.co.uk
+  name: simcube
+name: bytesafe-ce
+sources:
+- https://github.com/SimCubeLtd/simcube-helm-charts
+version: "1.0.0"
+
+dependencies:
+  - name: postgresql
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.enabled
+    version: 12.6.8
+  
+  - name: redis
+    repository: https://charts.bitnami.com/bitnami
+    condition: redis.enabled
+    version: 17.13.2

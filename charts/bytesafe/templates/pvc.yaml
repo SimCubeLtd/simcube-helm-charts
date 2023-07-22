@@ -4,11 +4,7 @@ apiVersion: v1
 metadata:
   name: {{ template "bytesafe.fullname" . }}-data
   labels:
-{{ include "bytesafe.labels" . | indent 4 }}
-{{- if .Values.persistence.annotations }}
-  annotations:
-{{ toYaml .Values.persistence.annotations | indent 4 }}
-{{- end }}
+    {{- include "bytesafe.labels" . | nindent 4 }}
 spec:
   accessModes:
     - {{ .Values.persistence.accessMode | quote }}

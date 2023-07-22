@@ -19,7 +19,7 @@ If release name contains chart name it will be used as a full name.
 {{- if contains $name .Release.Name }}
 {{- .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- else }}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" }}
+{{- printf "%s" $name | trunc 63 | trimSuffix "-" }}
 {{- end }}
 {{- end }}
 {{- end }}
@@ -37,9 +37,6 @@ Common labels
 {{- define "bytesafe.labels" -}}
 helm.sh/chart: {{ include "bytesafe.chart" . }}
 {{ include "bytesafe.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
@@ -48,7 +45,7 @@ Selector labels
 */}}
 {{- define "bytesafe.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "bytesafe.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 
 {{/*
