@@ -9,7 +9,7 @@ maintainers:
 name: bytesafe-ce
 sources:
 - https://github.com/SimCubeLtd/simcube-helm-charts
-version: "1.0.3"
+version: "1.0.4"
 
 dependencies:
   - name: postgresql
