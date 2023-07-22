@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bytesafe-config
+  labels:
+    {{- include "bytesafe.labels" . | nindent 4 }}
+data:
+  TELEMETRY: {{ .Values.telemetry }}
+  ALLOW_PRIVATE_IPS: {{ .Values.allowPrivateIps }}
+  URL_PREFIX: {{ .Values.urlPrefix }}
+
+{{- if and .Values.redis.enabled .Values.redis.nameOverride }}
+  REDIS_HOST: {{ .Values.redis.nameOverride }}
+{{- else if and .Values.externalRedis.enabled .Values.externalRedis.host }}
+  REDIS_HOST: {{ .Values.externalRedis.host }}
+{{- end }}
+
+{{- if and .Values.redis.enabled .Values.redis.service.port }}
+  REDIS_PORT: {{ .Values.redis.service.port }}
+{{- else if and .Values.externalRedis.enabled .Values.externalRedis.port }}
+  REDIS_PORT: {{ .Values.externalRedis.port}}
+{{- end }}
+
+{{- if and .Values.postgresql.enabled .Values.postgresql.auth.adminUsername }}
+  DB_ADMIN_USER: {{ .Values.postgresql.auth.adminUsername }}
+{{- else if and .Values.externalDatabase.enabled .Values.externalDatabase.adminUser }}
+  DB_ADMIN_USER: {{ .Values.externalDatabase.adminUser }}
+{{- end }}
+
+{{- if and .Values.postgresql.enabled .Values.postgresql.auth.username }}
+  DB_USER: {{ .Values.postgresql.auth.username }}
+{{- else if and .Values.externalDatabase.enabled .Values.externalDatabase.user }}
+  DB_USER: {{ .Values.externalDatabase.user }}
+{{- end }}
+
+{{- if and .Values.postgresql.enabled .Values.postgresql.nameOverride }}
+  DB_HOST: {{ .Values.postgresql.nameOverride }}
+{{- else if and .Values.externalDatabase.enabled .Values.externalDatabase.host }}
+  DB_HOST: {{ .Values.externalDatabase.host }}
+{{- end }}
+
+{{- if and .Values.postgresql.enabled .Values.postgresql.containerPorts.postgresql }}
+  DB_PORT: {{ .Values.postgresql.containerPorts.postgresql }}
+{{- else if and .Values.externalDatabase.enabled .Values.externalDatabase.port }}
+  DB_PORT: {{ .Values.externalDatabase.port }}
+{{- end }}
+
+{{- if .Values.smtp.enabled }}
+  SMTP_HOST: {{ .Values.smtp.host }}
+  SMTP_PORT: {{ .Values.smtp.port }}
+  SMTP_USER: {{ .Values.smtp.user }}
+  SMTP_FROM_ADDRESS: {{ .Values.smtp.from }}
+{{- end}}
