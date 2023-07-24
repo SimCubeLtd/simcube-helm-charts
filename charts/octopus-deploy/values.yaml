@@ -60,6 +60,7 @@ octopus:
     exposeServices: false
 
 persistence:
+  enabled: true
   storageClassName: ""
   # When replica count is 1, this value defines the storage access type. When replica count is greater than 1, the
   # storage more is always ReadWriteMany.
@@ -69,10 +70,18 @@ persistence:
   # The size of the artifact volume
   artifactVolumeSize: 1Gi
   # The size of the task log volume
-  taskVolumeSize: 1Gi
+  taskLogVolumeSize: 1Gi
   # The size of the server log volume. Each Octopus node mounts its own server log volume to ensure server logs
   # persist across restarts.
-  logVolumeSize: 200Mi
+  serverLogVolumeSize: 200Mi
+  # The name of the existing Task Logs PVC
+  existingTaskLogClaim: ""
+  # The name of the existing Server Logs PVC
+  existingServerLogClaim: ""
+  # The name of the existing Repository PVC
+  existingRepositoryClaim: ""
+  # The name of the existing artifacts PVC
+  existingArtifactsClaim: ""
   
 ingress:
   enabled: false

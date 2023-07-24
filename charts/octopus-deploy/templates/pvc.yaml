@@ -1,3 +1,4 @@
+{{- if and .Values.persistence.enabled (not .Values.persistence.existingRepositoryClaim) }}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
@@ -18,6 +19,9 @@ spec:
     requests:
       storage: {{.Values.persistence.repositoryVolumeSize}}
 ---
+{{- end }}
+
+{{- if and .Values.persistence.enabled (not .Values.persistence.existingArtifactsClaim) }}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
@@ -38,6 +42,9 @@ spec:
     requests:
       storage: {{.Values.persistence.artifactVolumeSize}}
 ---
+{{- end }}
+
+{{- if and .Values.persistence.enabled (not .Values.persistence.existingTaskLogClaim) }}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
@@ -56,4 +63,28 @@ spec:
   {{- end }}
   resources:
     requests:
-      storage: {{.Values.persistence.taskVolumeSize}}
+      storage: {{.Values.persistence.taskLogVolumeSize}}
+---
+{{- end }}
+
+{{- if and .Values.persistence.enabled (not .Values.persistence.existingServerLogClaim) }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: server-logs-claim
+spec:
+  accessModes:
+    {{- if (gt (.Values.octopus.replicaCount | int) 1)}}
+    - ReadWriteMany
+    {{- else }}
+    - {{.Values.persistence.storageAccessMode}}
+      {{- end }}
+  {{- if (eq "-" (.Values.persistence.storageClassName | toString)) }}
+  storageClassName: ""
+  {{- else if .Values.persistence.storageClassName }}
+  storageClassName: "{{ .Values.persistence.storageClassName }}"
+  {{- end }}
+  resources:
+    requests:
+      storage: {{.Values.persistence.serverLogVolumeSize}}
+{{- end }}

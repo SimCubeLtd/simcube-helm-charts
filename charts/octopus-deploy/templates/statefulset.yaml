@@ -62,14 +62,33 @@ spec:
       terminationGracePeriodSeconds: 10
       volumes:
         - name: repository-vol
+          {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
-            claimName: repository-claim
+            claimName: {{ .Values.persistence.existingRepositoryClaim | default "repository-claim" }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
         - name: artifacts-vol
+          {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
-            claimName: artifacts-claim
+            claimName: {{ .Values.persistence.existingArtifactsClaim | default "artifacts-claim" }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
         - name: task-logs-vol
+          {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
-            claimName: task-logs-claim
+            claimName: {{ .Values.persistence.existingTaskLogClaim | default "task-logs-claim" }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+        - name: server-logs-vol
+          {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingServerLogClaim | default "server-logs-claim" }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
 {{- if .Values.dockerHub.login }}
       imagePullSecrets:
         - name: dockerhubcreds
@@ -182,16 +201,3 @@ spec:
                 - URL=http://localhost:8080; response=$(/usr/bin/curl -k $URL/api/octopusservernodes/ping --write-out %{http_code} --silent --output /dev/null); /usr/bin/test "$response" -ge 200 && /usr/bin/test "$response" -le 299 || /usr/bin/test "$response" -eq 418
             failureThreshold: 30
             periodSeconds: 60
-  volumeClaimTemplates:
-    - metadata:
-        name: server-logs-vol
-      spec:
-        accessModes: [ "ReadWriteOnce" ]
-        {{- if (eq "-" (.Values.persistence.storageClassName | toString)) }}
-        storageClassName: ""
-        {{- else if .Values.persistence.storageClassName }}
-        storageClassName: "{{ .Values.persistence.storageClassName }}"
-        {{- end }}
-        resources:
-          requests:
-            storage: {{.Values.persistence.logVolumeSize}}
