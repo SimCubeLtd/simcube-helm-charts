@@ -64,7 +64,7 @@ spec:
             {{- end }}
             {{- if eq .Values.database.type "Sqlite" .}}
             - name: Database__ConnectionString
-              value: "Data Source=baget.db"
+              value: "Data Source=/app/packages/baget.db"
             {{- end }}
           livenessProbe:
             httpGet:
