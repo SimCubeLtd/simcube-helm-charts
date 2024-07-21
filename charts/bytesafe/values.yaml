@@ -115,6 +115,9 @@ postgresql:
     ## @param postgresql.auth.database Database to create when deploying the PostgreSQL chart
     ##
     database: bytesafe
+    ## @param postgresql.auth.sslmode Use SSL connections to encrypt client/server communications using TLS protocols for increased security.
+    ##
+    sslmode: disable
   ## PostgreSQL Primary parameters
   ##
   primary:
@@ -181,6 +184,9 @@ externalDatabase:
   ## @param externalDatabase.port Port of an external PostgreSQL to connect (only if postgresql.enabled=false)
   ##
   port: 5432
+  ## @param postgresql.auth.sslmode Use SSL connections to encrypt client/server communications using TLS protocols for increased security.
+  ##
+  sslmode: disable
   
 redis:
   ## Bitnami Redis image
