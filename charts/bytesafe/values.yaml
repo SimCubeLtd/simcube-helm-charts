@@ -1,7 +1,7 @@
 image:
   repository: bytesafe/bytesafe-ce
   pullPolicy: IfNotPresent
-  tag: "v1.0.4"
+  tag: "v1.0.12"
 
 imagePullSecrets: []
 nameOverride: ""
