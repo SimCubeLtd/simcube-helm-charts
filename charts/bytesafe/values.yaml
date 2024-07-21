@@ -184,7 +184,7 @@ externalDatabase:
   ## @param externalDatabase.port Port of an external PostgreSQL to connect (only if postgresql.enabled=false)
   ##
   port: 5432
-  ## @param postgresql.auth.sslmode Use SSL connections to encrypt client/server communications using TLS protocols for increased security.
+  ## @param externalDatabase.sslmode Use SSL connections to encrypt client/server communications using TLS protocols for increased security.
   ##
   sslmode: disable
   
