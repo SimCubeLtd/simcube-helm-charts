@@ -117,7 +117,7 @@ postgresql:
     database: bytesafe
     ## @param postgresql.auth.sslmode Use SSL connections to encrypt client/server communications using TLS protocols for increased security.
     ##
-    sslmode: disable
+    sslmode: prefer
   ## PostgreSQL Primary parameters
   ##
   primary:
@@ -186,7 +186,7 @@ externalDatabase:
   port: 5432
   ## @param externalDatabase.sslmode Use SSL connections to encrypt client/server communications using TLS protocols for increased security.
   ##
-  sslmode: disable
+  sslmode: prefer
   
 redis:
   ## Bitnami Redis image
