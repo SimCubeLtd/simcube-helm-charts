@@ -6,7 +6,7 @@ octopus:
     annotations: {}
     labels: {}
   # The Octopus server image. Visit https://hub.docker.com/r/octopusdeploy/octopusdeploy for the available versions.
-  image: octopusdeploy/octopusdeploy:2023.2.13113
+  image: octopusdeploy/octopusdeploy:2023.4.8636
   # Set this to 1 if you do not have a HA license.
   replicaCount: 1
   # The Octopus admin username
