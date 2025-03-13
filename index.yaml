@@ -858,6 +858,16 @@ entries:
     version: 1.0.1
   octopusdeploy:
   - apiVersion: v2
+    appVersion: 2025.1.9954
+    created: "2025-03-13T10:00:37.480177223Z"
+    description: Octopus Deploy server as a HA Kubernetes deployment
+    digest: 7be46300724f75ea20cb5a017a2d973b4efc215c79f145febc6d15cfe9d5fc3f
+    name: octopusdeploy
+    type: application
+    urls:
+    - https://github.com/SimCubeLtd/simcube-helm-charts/releases/download/octopusdeploy-1.0.21/octopusdeploy-1.0.21.tgz
+    version: 1.0.21
+  - apiVersion: v2
     appVersion: 2023.2.13113
     created: "2023-07-24T08:55:27.94580706Z"
     description: Octopus Deploy server as a HA Kubernetes deployment
@@ -1114,4 +1124,4 @@ entries:
     urls:
     - https://github.com/SimCubeLtd/simcube-helm-charts/releases/download/sonatype-nexus3-1.0.0/sonatype-nexus3-1.0.0.tgz
     version: 1.0.0
-generated: "2023-07-24T08:55:27.946060257Z"
+generated: "2025-03-13T10:00:37.48043198Z"
